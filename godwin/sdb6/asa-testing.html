@@ -1,10 +1,10 @@
 <html>
 	<head>
-		<title>GS0 LEXIE INAPP</title>
+		<title>SDB6 MESSAGING - GUEST</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 	</head>
 	<body>
-		<h1>GS0 LEXIE INAPP</h1>
+		<h1>SDB6 MESSAGING - GUEST</h1>
 		<h2>godwin@sdb6.org</h2>
 		<!-- Edit page link -->
 		<p><a id="editThisPageLink" target="_blank" style="color:blue">Edit this page</a></p>
@@ -37,28 +37,33 @@
 
 			window.addEventListener("onEmbeddedMessagingReady", () => {
 				console.log("onEmbeddedMessagingReady emitted");
+
+				embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields({"Custom_Field" : "CustomValue","Customer_ID" : "11098324"});
+			});
+
+			window.addEventListener("onEmbeddedMessagingPreChatSubmitted", (event) => {
+				console.log("onEmbeddedMessagingPreChatSubmitted emitted");
+				console.log(event.detail);
 			});
 		</script>
-		<script type='text/javascript'>
-			function initEmbeddedMessaging() {
-				try {
-					embeddedservice_bootstrap.settings.language = 'en'; // For example, enter 'en' or 'en-US'
-					embeddedservice_bootstrap.settings.devMode = true;
-
-	          			embeddedservice_bootstrap.init(
-		    				'00DB0000000gcgU',
-		    				'Messaging_1',
-		    				'https://lexie-summer22-gs0-esw.my.site.com/ESWMessaging11694651508101',
-		    				{
-		    					scrt2URL: 'https://lexie-summer22-gs0-esw.my.salesforce-scrt.com'
-		    				}
-		    			);
-		    		} catch (err) {
-		    			console.error('Error loading Embedded Messaging: ', err);
-		    		}
-		    	};
-	   	</script>
-	    	<script type='text/javascript' src='https://lexie-summer22-gs0-esw.my.site.com/ESWMessaging11694651508101/assets/js/bootstrap.js' onload='initEmbeddedMessaging()'></script>
-	  	<!--<script type='text/javascript' src='https://esw1234.github.io/godwin/assets/js/bootstrap.js' onload='initEmbeddedMessaging()'></script>-->
-	</body>
+<script type='text/javascript'>
+	function initEmbeddedMessaging() {
+		try {
+			embeddedservice_bootstrap.settings.language = 'en_US'; // For example, enter 'en' or 'en-US'
+      embeddedservice_bootstrap.settings.devMode = true;
+			embeddedservice_bootstrap.init(
+				'00DVR000000xxVV',
+				'miaw1',
+				'https://mavperf.perf1v.my.pc-rnd.site.com/ESWmiaw11731564338275',
+				{
+					scrt2URL: 'https://mavperf.perf1v.my.pc-rnd.salesforce-scrt.com'
+				}
+			);
+		} catch (err) {
+			console.error('Error loading Embedded Messaging: ', err);
+		}
+	};
+</script>
+<script type='text/javascript' src='https://mavperf.perf1v.my.pc-rnd.site.com/ESWmiaw11731564338275/assets/js/bootstrap.js' onload='initEmbeddedMessaging()'></script>
+</body>
 </html>
