@@ -2,7 +2,6 @@
   "keys":[
    {
       "kid": "12345",
-      "alg": "RS512",
       "use": "sig",
       "kty": "RSA",
       "x5c": [
