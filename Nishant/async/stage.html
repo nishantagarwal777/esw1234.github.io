@@ -1,28 +1,11 @@
+<!DOCTYPE html> 
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-    </head>
-    <body>
-<h1>Stage MIAW1</h1>
-        <p><a id="editThisPageLink" target="_blank" style="color:blue">Edit this page</a></p>
-<script type='text/javascript'>
-	function initEmbeddedMessaging() {
-		try {
-			embeddedservice_bootstrap.settings.language = 'en_US'; // For example, enter 'en' or 'en-US'
-
-			embeddedservice_bootstrap.init(
-				'00Dab000000A2e9',
-				'miaw_web_prechat',
-				'https://miawstage3.stagecom.my.pc-rnd.site.com/ESWmiawwebprechat1708530336450',
-				{
-					scrt2URL: 'https://miawstage3.stagecom.my.pc-rnd.salesforce-scrt.com'
-				}
-			);
-		} catch (err) {
-			console.error('Error loading Embedded Messaging: ', err);
-		}
-	};
-</script>
-<script type='text/javascript' src='https://miawstage3.stagecom.my.pc-rnd.site.com/ESWmiawwebprechat1708530336450/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>      
-    </body>
+   <head>
+      <title>API Fetch Example</title>
+   </head>
+   <body>
+      <h2>API Response:</h2>
+      <pre id="responseBox">Loading...</pre>
+      <script> const url = "https://sachinsdb6.test1.my.pc-rnd.salesforce.com/miaw/auth/accesstoken?platformType=Web&developerName=WebAuth1&capabilitiesVersion=248"; fetch(url) .then(response => { if (!response.ok) { throw new Error("HTTP error " + response.status); } return response.text(); // could also use .json() if response is JSON }) .then(data => { document.getElementById("responseBox").textContent = data; }) .catch(error => { document.getElementById("responseBox").textContent = "Error: " + error; }); </script> 
+   </body>
 </html>
