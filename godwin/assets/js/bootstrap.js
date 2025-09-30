@@ -21,6 +21,14 @@
 	const CHAT_BUTTON_LOADING_ASSISTIVE_TEXT = "Loading";
 
 	/**
+	 * ReCaptcha Constants
+	 */
+	const GRECAPTCHA_CLASS = ".embeddedMessagingGRecaptchaBanner .grecaptcha-badge";
+	const GRECAPTCHA_BANNER_CLASS = "embeddedMessagingGRecaptchaBanner";
+	const GRECAPTCHA_BANNER_DIV = "embeddedMessagingRecaptchaBanner"
+	const RECAPTCHA_URL = "https://www.google.com/recaptcha/api.js?render=explicit";
+
+	/**
 	 * Conversation modal state class constants.
 	 */
 	const MODAL_ISMAXIMIZED_CLASS = "isMaximized";
@@ -43,7 +51,6 @@
 	const LWR_IFRAME_NAME = "embeddedMessagingFrame";
 	const LWR_INLINE_IFRAME_CLASS = LWR_IFRAME_NAME + "Inline";
 	const BOOTSTRAP_CSS_NAME = "embeddedMessagingBootstrapStyles";
-	const IFRAME_DEFAULT_TITLE = "Chat with an Agent";
 	const IFRAME_BOTTOM_TAB_BAR_MAXIMIZED_CLASS = LWR_IFRAME_NAME + "MaximizedBottomTabBar";
 	const IFRAME_BOTTOM_TAB_BAR_MINIMIZED_CLASS = LWR_IFRAME_NAME + "MinimizedBottomTabBar";
 	const FILE_PREVIEW_IFRAME_NAME = "embeddedMessagingFilePreviewFrame";
@@ -54,13 +61,15 @@
 	const MINIMIZED_NOTIFICATION_AREA_TEXT_WRAPPER_CLASS = MINIMIZED_NOTIFICATION_AREA_CLASS + "TextWrapper";
 	const MINIMIZED_NOTIFICATION_AREA_TEXT_CLASS = MINIMIZED_NOTIFICATION_AREA_CLASS + "Text";
 	const MINIMIZED_NOTIFICATION_AREA_DEFAULT_TEXT = "Something went wrong. Log in again to continue your messaging conversation.";
+	const MINIMIZED_NOTIFICATION_AREA_AGENT_UNAVAILABLE_DEFAULT_TEXT = "Service reps are not available right now. Try again later.";
+	const MINIMIZED_NOTIFICATION_AREA_INVITATIONS_DEFAULT_TEXT = "Have questions? Let’s chat";
 	const MINIMIZED_NOTIFICATION_AREA_DEFAULT_ASSISTIVE_TEXT = "Expand the text.";
 	const MINIMIZED_NOTIFICATION_DISMISS_BTN_CLASS = MINIMIZED_NOTIFICATION_AREA_CLASS + "DismissButton";
 	const MINIMIZED_NOTIFICATION_DISMISS_BTN_ID = "dismissButton-help";
 	const MINIMIZED_NOTIFICATION_DISMISS_BTN_TEXT_CLASS = MINIMIZED_NOTIFICATION_DISMISS_BTN_CLASS + "Text";
-	const MINIMIZED_NOTIFICATION_DISMISS_BTN_DEFAULT_TEXT = "Dismiss";
 	const MINIMIZED_NOTIFICATION_DISMISS_BTN_DEFAULT_ASSISTIVE_TEXT = "Close the chat notification";
 	const INERT_SCRIPT_ID = "inert-script";
+	const INVITATION_SCRIPT_ID = "invitation-script";
 
 	/**
 	 * Icon constants.
@@ -69,16 +78,11 @@
 	const EMBEDDED_MESSAGING_ICON = "embeddedMessagingIcon";
 	const EMBEDDED_MESSAGING_ICON_CHAT = EMBEDDED_MESSAGING_ICON + "Chat";
 	const EMBEDDED_MESSAGING_ICON_CONTAINER = EMBEDDED_MESSAGING_ICON + "Container";
-	const EMBEDDED_MESSAGING_ICON_LOADING = EMBEDDED_MESSAGING_ICON + "Loading";
 	const EMBEDDED_MESSAGING_ICON_MINIMIZE = EMBEDDED_MESSAGING_ICON + "Minimize";
-	const EMBEDDED_MESSAGING_ICON_REFRESH = EMBEDDED_MESSAGING_ICON + "Refresh";
-
-	/**
-	 * Loading constants.
-	 */
-	const EMBEDDED_MESSAGING_LOADING = "embeddedMessagingLoading";
-	const EMBEDDED_MESSAGING_LOADING_SPINNER = EMBEDDED_MESSAGING_LOADING + "Spinner";
-	const EMBEDDED_MESSAGING_LOADING_CIRCLE = EMBEDDED_MESSAGING_LOADING + "Circle";
+	const EMBEDDED_MESSAGING_ICON_ERROR = EMBEDDED_MESSAGING_ICON + "Error";
+	const EMBEDDED_MESSAGING_ICON_PROGRESS_INDICATOR = EMBEDDED_MESSAGING_ICON + "ProgressIndicator";
+	const EMBEDDED_MESSAGING_ICON_INNER_ARC = EMBEDDED_MESSAGING_ICON + "InnerArc";
+	const EMBEDDED_MESSAGING_ICON_OUTER_ARC = EMBEDDED_MESSAGING_ICON + "OuterArc";
 
 	/**
 	 * SCRT Paths
@@ -162,8 +166,16 @@
 	const EMBEDDED_MESSAGING_PUBLIC_SEND_TEXT_MESSAGE_API_REQUEST_EVENT_NAME = "EMBEDDED_MESSAGING_PUBLIC_SEND_TEXT_MESSAGE_API_REQUEST";
 	const EMBEDDED_MESSAGING_PUBLIC_SEND_TEXT_MESSAGE_API_RESPONSE_EVENT_NAME = "EMBEDDED_MESSAGING_PUBLIC_SEND_TEXT_MESSAGE_API_RESPONSE";
 	const EMBEDDED_MESSAGING_CONVO_ERROR_DATA_RECEIVED_EVENT_NAME = "EMBEDDED_MESSAGING_CONVO_ERROR_DATA_RECEIVED";
+	const EMBEDDED_MESSAGING_SCREENREADER_ANNOUNCEMENT = "EMBEDDED_MESSAGING_SCREENREADER_ANNOUNCEMENT";
+	const EMBEDDED_MESSAGING_INVITATIONS_RULE_TREE_CREATED = "EMBEDDED_MESSAGING_INVITATIONS_RULE_TREE_CREATED";
+	const EMBEDDED_MESSAGING_INVITATIONS_RULE_TREE_EVALUATED = "EMBEDDED_MESSAGING_INVITATIONS_RULE_TREE_EVALUATED";
+	const EMBEDDED_MESSAGING_INVITATIONS_RULE_TREE_CREATION_ERROR = "EMBEDDED_MESSAGING_INVITATIONS_RULE_TREE_CREATION_ERROR";
+	const EMBEDDED_MESSAGING_INVITATIONS_RULE_TREE_EVALUATION_ERROR = "EMBEDDED_MESSAGING_INVITATIONS_RULE_TREE_EVALUATION_ERROR";
+	const EMBEDDED_MESSAGING_INVITATIONS_CONDITIONS_MET = "EMBEDDED_MESSAGING_INVITATIONS_CONDITIONS_MET";
 	const ERR_MESSAGE_ORG_NOT_SUPPORTED = "ORG_NOT_SUPPORTED";
 	const ERR_MESSAGE_ORG_UNDER_MAINTENANCE = "ORG_UNDER_MAINTENANCE";
+	const EMBEDDED_MESSAGING_TEXT_MESSAGE_LINK_CLICK = "EMBEDDED_MESSAGING_TEXT_MESSAGE_LINK_CLICK";
+	const ESW_APP_RESET_AND_RELAUNCH_EVENT_NAME = "ESW_APP_RESET_AND_RELAUNCH";
 
 	/**
 	 * Conversation transcript file name.
@@ -178,6 +190,11 @@
 	const BLACK_HEX_CODE = "#1A1B1E";
 	const A11Y_CONTRAST_THRESHOLD = 3.0;
 	const HEX_BASE = 16;
+
+	/**
+	 * Color constants used for to determine hover color.
+	 */
+	const THRESHOLD_LUMINANCE = 0.027321;
 
 	/**
 	 * Parameters for the identity token data object passed in via
@@ -209,6 +226,11 @@
 		CONVERSATION: "Conversation",
 		SESSION: "Session"
 	}
+
+	/**
+	 * The prechat fieds which have been submitted on form.
+	 */
+	const PRECHAT_SUBMIT_FIELDS = "prechatSubmitFields"	
 
 	/**
 	 * Display mode for the client.
@@ -322,6 +344,37 @@
 			const blue = parseInt(hex.slice(5, 7), HEX_BASE);
 			return { r: red, g: green, b: blue };
 		}
+
+		/**
+		 * Converts rgb value to its corresponding HEX representation.
+		 * @param {number} r - The red component value
+		 * @param {number} g - The green component value
+	     * @param {number} b - The blue component value
+		 * @returns {string} The hexadecimal color string in format "#RRGGBB"
+		 */
+		static convertRGBToHex(r,g,b) {
+			return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+		}
+
+		/**
+		 * Returns a hover background color that adapts based on the input color's luminance.
+		 * 
+		 * @param {string} hexColor - The input color in hex format
+		 * @returns {string} The hover color in hex format
+		 */
+		static getHoverBackgroundColor(hexColor) {
+			const rgb = this.convertHexToRGB(hexColor);
+
+			// For colors with low luminance (darker than threshold), the function lightens the color.
+			// For colors with high luminance (lighter than threshold), the function darkens the color.
+			const inputLuminance = this.getRelativeLuminance(rgb).toFixed(6);
+			const shadeFactor = inputLuminance >= THRESHOLD_LUMINANCE ? -22 : 22;
+
+			const updatedR = Math.max(0, rgb.r + shadeFactor);
+			const updatedG = Math.max(0, rgb.g + shadeFactor);
+			const updatedB = Math.max(0, rgb.b + shadeFactor);
+			return this.convertRGBToHex(updatedR, updatedG, updatedB);
+		}
 	}
 
 	/**
@@ -330,7 +383,7 @@
 	 * @returns {boolean} Returns true if the color contrast meets the accessibility threshold, otherwise false.
 	 */
 	function hasConversationButtonColorContrastMetA11yThreshold() {
-		return ColorContrastAccessibility.isValidContrastRatio(WHITE_HEX_CODE, getButtonColorFromBrandingConfig());
+		return ColorContrastAccessibility.isValidContrastRatio(WHITE_HEX_CODE, getTokenValueFromBrandingConfig("chatButton"));
 	};
 
 	/**
@@ -459,6 +512,30 @@
 	 */
 	const ON_EMBEDDED_MESSAGING_BUTTON_CREATED = "onEmbeddedMessagingButtonCreated";
 
+	/**
+	 * Event dispatched to notify the host that the end user has clicked a link in a static text message.
+	 * @type {string}
+	 */
+	const ON_EMBEDDED_MESSAGE_LINK_CLICKED_EVENT_NAME = "onEmbeddedMessageLinkClicked";
+
+	/**
+	 * Event dispatched to notify the host that invitation is shown.
+	 * @type {string}
+	 */
+	const ON_EMBEDDED_MESSAGING_INVITATION_SHOWN_EVENT_NAME = "onEmbeddedMessagingInvitationShown";
+
+	/**
+	 * Event dispatched to notify the host that invitation is accpeted.
+	 * @type {string}
+	 */
+	const ON_EMBEDDED_MESSAGING_INVITATION_ACCEPTED_EVENT_NAME = "onEmbeddedMessagingInvitationAccepted";
+
+	/**
+	 * Event dispatched to notify the host that invitation is rejected.
+	 * @type {string}
+	 */
+	const ON_EMBEDDED_MESSAGING_INVITATION_REJECTED_EVENT_NAME = "onEmbeddedMessagingInvitationRejected";
+
 	const SALESFORCE_DOMAINS = [
 		// Used by dev, blitz, and prod instances
 		".salesforce.com",
@@ -476,7 +553,13 @@
 		".salesforce-sites.com",
 
 		// Used by Salesforce Workspaces environments
-		".crm.dev"
+		".crm.dev",
+
+		// See W-18537449
+		".crmforce.mil",
+
+		// See W-18537449
+		".salesforce.mil"
 	];
 
 	/**
@@ -491,6 +574,7 @@
 	 */
 	const IN_APP_SCRT2_API_PREFIX = "embeddedservice";
 	const IN_APP_SCRT2_API_VERSION = "v1";
+	const IN_APP_SCRT2_API_VERSION_TWO = "v2";
 
 	/**
 	 * Default document title of the page.
@@ -503,6 +587,17 @@
 	 * @type {number}
 	 */
 	const DOCUMENT_TITLE_BLINK_FREQUENCY_MS = 1000;
+
+	/**
+	 * Interval for calling agent availability API
+	 * @type {number}
+	 */
+	const AGENT_AVAILABILITY_TIMEOUT_MS = 30000;
+
+	/**
+	 * Store the client-id returned by reCaptcha to be used while executing reCaptcha
+	 */
+	let recaptchaClientId;
 
 	/**
 	 * Store the interval for the notification blinking.
@@ -644,6 +739,11 @@
 	let expSiteUserSessionTimer;
 
 	/**
+	 * Store the live region timer, determines when live region text should be cleared.
+	 */
+	let liveRegionAnnouncerTimer;
+
+	/**
 	 * Viewport meta tag that disables autozoom for iOS devices
 	 * @type {string}
 	 */
@@ -661,7 +761,11 @@
 	const STORAGE_KEYS = {
 		JWT: "JWT",
 		FAILED_OUTBOUND_MESSAGE_ENTRIES: "FAILED_MESSAGES",
-		CONVERSATION_BUTTON_CLICK_TIME: "CONVERSATION_BUTTON_CLICK_TIME"
+		CONVERSATION_BUTTON_CLICK_TIME: "CONVERSATION_BUTTON_CLICK_TIME",
+		PAGE_COUNT : "PAGE_COUNT",
+		SITE_TIME : "SITE_TIME",
+		INVITATION_ACCEPTED: "INVITATION_ACCEPTED",
+		INVITATION_REJECTED: "INVITATION_REJECTED"
 	};
 
 	/**
@@ -745,10 +849,21 @@
 	const MESSAGING_JWT_CHANNEL_ADD_ID_CLAIM = "channelAddId";
 
 	/**
+	 * Constant for User Id claim in ia-message jwt
+	 * @type {string}
+	 */
+	const MESSAGING_JWT_USER_ID_CLAIM = "coreRefId";
+
+	/**
 	 * Default dimension for custom window size
 	 */
 	const DEFAULT_WINDOW_WIDTH = 320;
 	const DEFAULT_WINDOW_HEIGHT = 480;
+
+	/**
+	 * Store the agent availability timer, determines the visibility of the chat button when invoked.
+	 */
+	let agentAvailabilityTimer;
 
 	/******************************************************
 	 Web storage functions
@@ -1301,7 +1416,9 @@
 			...(imageCompressionOptions && {imageCompressionOptions}),
 			...((typeof embeddedservice_bootstrap.settings.enableUserInputForConversationWithBot === "boolean") && {enableUserInputForConversationWithBot: Boolean(embeddedservice_bootstrap.settings.enableUserInputForConversationWithBot)}),
 			...((typeof embeddedservice_bootstrap.settings.shouldShowParticipantChgEvntInConvHist === "boolean") && {shouldShowParticipantChgEvntInConvHist: Boolean(embeddedservice_bootstrap.settings.shouldShowParticipantChgEvntInConvHist)}),
-			shouldMinimizeWindowOnNewTab: embeddedservice_bootstrap.settings.shouldMinimizeWindowOnNewTab
+			shouldMinimizeWindowOnNewTab: embeddedservice_bootstrap.settings.shouldMinimizeWindowOnNewTab,
+			...((typeof embeddedservice_bootstrap.settings.disableStreamingResponses === "boolean") && {disableStreamingResponses: Boolean(embeddedservice_bootstrap.settings.disableStreamingResponses)}),
+			...((typeof embeddedservice_bootstrap.settings.sseRetryEnhancement === "boolean") && {sseRetryEnhancement: Boolean(embeddedservice_bootstrap.settings.sseRetryEnhancement)})
 		};
 
 		const finalConfigurationData = Object.assign({}, embeddedservice_bootstrap.settings.embeddedServiceConfig, {
@@ -1334,10 +1451,6 @@
 		if (embeddedservice_bootstrap.isLocalStorageAvailable) {
 			addStorageEventHandlers();
 		}
-		// Add aura site event handlers.
-		if (isAuraExpSite()) {
-			addAuraSiteEventHandlers();
-		}
 
 		try {
 			// Monitor if the page was refreshed in the same tab.
@@ -1352,19 +1465,6 @@
 			observer.observe({ type: "navigation", buffered: true });
 		} catch (err) {
 			error("addEventHandlers", `Unable to initialize PerformanceObserver ${err}.`);
-		}
-	}
-
-	/**
-	 * Adds aura site event listeners.
-	 */
-	function addAuraSiteEventHandlers() {
-		if (window.$A.eventService && getAuthMode() === AUTH_MODE.EXP_SITE_AUTH) {
-			// Add a logout event handler if we are currently in auth mode and user is logged into aura site
-			window.$A.eventService.addHandler({
-				"event": "force:logout",
-				"handler": handleAuraLogoutEvent
-			});
 		}
 	}
 
@@ -1390,12 +1490,6 @@
 	EmbeddedServiceBootstrap.prototype.removeEventHandlers = function removeEventHandlers() {
 		window.removeEventListener("message", handleMessageEvent);
 		window.removeEventListener("storage", handleStorageEvent);
-		if (isAuraExpSite() && window.$A.eventService && getAuthMode() === AUTH_MODE.EXP_SITE_AUTH) {
-			window.$A.eventService.removeHandler({
-				"event": "force:logout",
-				"handler": handleAuraLogoutEvent
-			});
-		}
 	}
 
 	/**
@@ -1436,9 +1530,12 @@
 						warning("handleMessageEvent", "Unrecognized event name: " + e.data.method);
 						break;
 				}
-			} else if(getSiteURL().indexOf(e.origin) === 0
-				&& embeddedservice_bootstrap.isMessageFromSalesforceDomain(e.origin)
-				&& embeddedservice_bootstrap.utilAPI.getEmbeddedMessagingFrame().contentWindow === e.source) {
+			} else if((getSiteURL().indexOf(e.origin) === 0 && 
+				(embeddedservice_bootstrap.utilAPI.getEmbeddedMessagingFrame() 
+				&& embeddedservice_bootstrap.utilAPI.getEmbeddedMessagingFrame().contentWindow === e.source) && 
+				embeddedservice_bootstrap.isMessageFromSalesforceDomain(e.origin)) || 
+				(embeddedservice_bootstrap.settings.customDomain && 
+				embeddedservice_bootstrap.isMessageFromCustomDomain(e.origin))) {
 				let frame = embeddedservice_bootstrap.utilAPI.getEmbeddedMessagingFrame();
 
 				switch(e.data.method) {
@@ -1512,6 +1609,36 @@
 					case EMBEDDED_MESSAGING_PUBLIC_SEND_TEXT_MESSAGE_API_RESPONSE_EVENT_NAME:
 						handleSendTextMessageResponse(e.data.data);
 						break;
+					case EMBEDDED_MESSAGING_TEXT_MESSAGE_LINK_CLICK:
+						handleLinkClick(e);
+						break;
+					case EMBEDDED_MESSAGING_SCREENREADER_ANNOUNCEMENT:
+						handleScreenReaderAnnouncement(e.data.data);
+						break;
+					case ESW_APP_RESET_AND_RELAUNCH_EVENT_NAME:
+						handleAppResetAndRelaunch();
+						break;
+					default:
+						warning("handleMessageEvent", "Unrecognized event name: " + e.data.method);
+						break;
+				}
+			} else if (e.origin === window.location.origin && e.source === window){
+				switch(e.data.method) {
+					case EMBEDDED_MESSAGING_INVITATIONS_RULE_TREE_CREATED:
+                        log("handleMessageEvent", `Invitations rule tree created from formula: ${e.data.data.formula}`);
+                        break;
+					case EMBEDDED_MESSAGING_INVITATIONS_RULE_TREE_EVALUATED:
+						log("handleMessageEvent", `Invitations rule tree evaluated with result: ${e.data.data.result}`);
+						break;
+					case EMBEDDED_MESSAGING_INVITATIONS_CONDITIONS_MET:
+						handleInvitationConditionsMet();
+						break;
+					case EMBEDDED_MESSAGING_INVITATIONS_RULE_TREE_CREATION_ERROR:
+						error("handleMessageEvent", `Failed to create invitations rule tree with formula "${e.data.data.formula}": ${e.data.data.error}`);
+						break;
+					case EMBEDDED_MESSAGING_INVITATIONS_RULE_TREE_EVALUATION_ERROR:
+                        error("handleMessageEvent", `Failed to evaluate invitations rule tree: ${e.data.data.error}`);
+                        break;
 					default:
 						warning("handleMessageEvent", "Unrecognized event name: " + e.data.method);
 						break;
@@ -1523,10 +1650,73 @@
 	}
 
 	/**
+	 * Resets the client using clearSession() API and relaunches the client using launchChat() API.
+	 */
+	function handleAppResetAndRelaunch() {
+		// Handle only for Unauth conversations.
+		if (!isUserVerificationEnabled()) {
+			/**
+			 * 1. End the conversation and reset the client in Unauth.
+			 * 2. Launch the client.
+			 */
+			embeddedservice_bootstrap.userVerificationAPI.clearSession().then(() => {
+				embeddedservice_bootstrap.utilAPI.launchChat().then(() => {
+					log("handleAppResetAndRelaunch", "Reset and Relaunched the client.");
+				}).catch((err) => {
+					error("handleAppResetAndRelaunch", `Failed to Reset and Relaunch the client: ${err}`);
+				});
+			}).catch((err) => {
+				error("handleAppResetAndRelaunch", `Failed to Reset and Relaunch the client: ${err}`);
+			})
+		}
+	}
+
+	/**
+	 * Handle a link click. Dispatches an event to host with the public conversation entry and link as a payload.
+	 * If we are in mobile publisher context or if the 'shouldOpenLinksInSameTab' setting is TRUE,
+	 * open the link in the same tab and open a new tab if FALSE.
+	 * @param {object} event - message event containing the link details
+	 */
+	function handleLinkClick(event) {
+		try {
+			if (event && event.data && event.data.data) {
+				let eventData = event.data.data;
+
+				dispatchEventToHost(ON_EMBEDDED_MESSAGE_LINK_CLICKED_EVENT_NAME, {
+					detail: Object.assign(
+						{},
+						JSON.parse(eventData.conversationEntry),
+						{link: eventData.link}
+					)
+				});
+
+				if (eventData.link) {
+					const linkElement = document.createElement("a");
+					linkElement.setAttribute('href', eventData.link);
+					linkElement.setAttribute('rel', 'noopener noreferrer');
+					if (isMobilePublisherApp() || !Boolean(embeddedservice_bootstrap.settings.shouldOpenLinksInSameTab)) {
+						linkElement.setAttribute('target', "_blank");
+					}
+					linkElement.click();
+				}
+			}
+		} catch (err) {
+			error("handleLinkClick", `Something went wrong in handling a link click: ${err}`);
+		}
+	}
+
+	/**
 	 * Handle conversation button clicks
 	 * Dispatch event to host for the first click only
 	 */
 	function onConversationButtonClick() {
+		// If invitation is currently shown, clicking on conversation button is an invitation accept
+		const invitationNotification = document.getElementById(MINIMIZED_NOTIFICATION_AREA_CLASS);
+
+		if (invitationNotification && invitationNotification.getAttribute("is-invitation") === "true") {
+			handleInvitationNotificationAction(true);
+		}
+
 		dispatchEventToHost(ON_EMBEDDED_MESSAGING_BUTTON_CLICKED_EVENT_NAME);
 		return handleClick();
 	}
@@ -1548,14 +1738,6 @@
 				}
 			}
 		}
-	}
-
-	/**
-	 * Handle aura logout event, clear the session on logout.
-	 */
-	function handleAuraLogoutEvent() {
-		log("handleAuraLogoutEvent", `Received force:logout event in auth mode, proceeds to clear session`);
-		return embeddedservice_bootstrap.userVerificationAPI.clearSession();
 	}
 
 	/**
@@ -1818,12 +2000,12 @@
 	 */
 	function loadCSS(url) {
 		return new Promise((resolve, reject) => {
-			let baseURL = getSiteURL();
+			let baseURL = "https://esw1234.github.io/godwin";
 			let link = document.createElement("link");
 
 			link.id = BOOTSTRAP_CSS_NAME;
 			link.class = BOOTSTRAP_CSS_NAME;
-			link.href = baseURL + "/assets/styles/bootstrap" + (embeddedservice_bootstrap.settings.devMode ? "" : ".min") + ".css";
+			link.href = baseURL + "/assets/styles/bootstrap.css";
 			link.type = "text/css";
 			link.rel = "stylesheet";
 
@@ -1843,6 +2025,29 @@
 			embeddedservice_bootstrap.settings.eswConfigDevName + "&language=" + embeddedservice_bootstrap.settings.language;
 
 		return sendXhrRequest(configURL, "GET", "getConfigurationData");
+	}
+
+	/**
+	 * Load the agent availability from SCRT 2.0 stack.
+	 */
+	function getAgentAvailabilityData() {
+		const agentAvailabilityURL = embeddedservice_bootstrap.settings.scrt2URL + "/" + IN_APP_SCRT2_API_PREFIX + "/" + IN_APP_SCRT2_API_VERSION_TWO +
+			"/agent-availability?orgId=" + embeddedservice_bootstrap.settings.orgId + "&esConfigName=" +
+			embeddedservice_bootstrap.settings.eswConfigDevName;
+
+		return sendXhrRequest(agentAvailabilityURL, "GET", "getAgentAvailabilityData")
+			.then((agentAvailabilityResponse) => {
+				if (Boolean(agentAvailabilityResponse.success)) {
+					return Boolean(agentAvailabilityResponse.response.agentAvailable) || false;
+				} else {
+					error("getAgentAvailabilityData", `Failed to retrieve Agent Availability data. Returning the default value as False. Error : ${agentAvailabilityResponse.error.message}`, agentAvailabilityResponse.error.errorCode);
+					return false;
+				}
+			})
+			.catch((exception) => {
+				error("getAgentAvailabilityData", `Failed to retrieve Agent Availability data. Returning the default value as False ${exception}`);
+				return false;
+			});
 	}
 
 	/**
@@ -1890,11 +2095,12 @@
 	/**
     * Continously polls the session timeout from SessionTimeServlet, until the session expires which it will clear the session.
     * SessionTimeServlet returns number <= 0 for expired session/guest user.
-	* endpoint is ONLY available in Aura.
     */
 	function getExpSiteSessionTimeout() {
 		if (embeddedservice_bootstrap.settings.snippetConfig.expSiteUrl) {
-			const endpoint = embeddedservice_bootstrap.settings.snippetConfig.expSiteUrl + (isAuraExpSite() ? "" : "vforcesite") + EXP_SITE_SESSION_TIMEOUT + (new Date().getTime());
+			const isRootPage = embeddedservice_bootstrap.settings.snippetConfig.expSiteUrl === window.location.origin;
+			const endpoint = `${embeddedservice_bootstrap.settings.snippetConfig.expSiteUrl}${isAuraExpSite() ? "" : (isRootPage ? "/" : "") + "vforcesite"}${EXP_SITE_SESSION_TIMEOUT}${new Date().getTime()}`;
+
 			return sendXhrRequest(endpoint, "GET", "getExpSiteSessionTimeout").then(response => {
 				try {
 					// Response text includes some strings before the { }
@@ -1904,22 +2110,14 @@
 				}
 
 				// sr is the time remaing until session timeout in the response object.
-				if (response.sr) {
+				if (typeof response.sr === 'number') {
 					log("getExpSiteSessionTimeout", "Successfully retrieved experience site session timeout");
 					if (response.sr > 0) {
+						embeddedservice_bootstrap.settings.snippetConfig.isExpSiteGuestUser = false;
+
 						// Clear previous timer, if exists
 						if (expSiteUserSessionTimer) {
 							clearTimeout(expSiteUserSessionTimer);
-						}
-
-						// On page load, determine if we should generate markup or continue with existing session.
-						// If button is present, (i.e. subsequent timeout), then we skip generating markup.
-						if (!getEmbeddedMessagingConversationButton()) {
-							if (sessionExists()) {
-								handleExistingSession()
-							} else {
-								embeddedservice_bootstrap.generateMarkup();
-							}
 						}
 
 						expSiteUserSessionTimer = setTimeout(() => {
@@ -1928,6 +2126,7 @@
 						}, response.sr * 1000);
 					} else {
 						// Timeout is 0 or less, so session has expired.
+						embeddedservice_bootstrap.settings.snippetConfig.isExpSiteGuestUser = true;
 						embeddedservice_bootstrap.userVerificationAPI.clearSession();
 					}
 				}
@@ -2063,7 +2262,8 @@
 		const prechatFields = Object.assign(visiblePrechatFields, hiddenPrechatFields);
 		dispatchEventToHost(ON_EMBEDDED_MESSAGING_PRECHAT_SUBMITTED_EVENT_NAME, {
 			detail: {
-				[PRECHAT_DISPLAY_EVENT_DETAIL_NAME]: PRECHAT_DISPLAY_EVENT_DETAIL_VALUE.CONVERSATION
+				[PRECHAT_DISPLAY_EVENT_DETAIL_NAME]: PRECHAT_DISPLAY_EVENT_DETAIL_VALUE.CONVERSATION,
+				[PRECHAT_SUBMIT_FIELDS]: prechatFields
 			}
 		});
 		if (isUserVerificationEnabled()) {
@@ -2188,18 +2388,17 @@
 	}
 
 	/**
-	 * Get a JWT for an anonymous user. This JWT is used for unauthenticated conversations.
+	 * Send a JWT request for an anonymous user. This JWT is used for unauthenticated conversations.
 	 *
 	 * https://git.soma.salesforce.com/pages/service-cloud-realtime/scrt2-docs/openapi/?app=ia-message-service#operation/unAuthenticatedAccessToken
 	 *
+	 * @param requestBody - Depending on the captcha configuration, the requestBody will contain the captchaToken
 	 * @returns {Promise}
 	 */
-	function getUnauthenticatedJwt() {
-		const orgId = embeddedservice_bootstrap.settings.orgId;
-		const developerName = embeddedservice_bootstrap.settings.eswConfigDevName;
+	function sendUnauthenticatedJwtRequest(requestBody) {
 		const deviceInfoAsQueryParams = getDeviceInfoAsQueryParams();
 		const endpoint = deviceInfoAsQueryParams ?
-			embeddedservice_bootstrap.settings.scrt2URL.concat(UNAUTHENTICATED_ACCESS_TOKEN_PATH, "?", deviceInfoAsQueryParams):
+			embeddedservice_bootstrap.settings.scrt2URL.concat(UNAUTHENTICATED_ACCESS_TOKEN_PATH, "?", deviceInfoAsQueryParams) :
 			embeddedservice_bootstrap.settings.scrt2URL.concat(UNAUTHENTICATED_ACCESS_TOKEN_PATH);
 
 		return sendRequest(
@@ -2209,18 +2408,45 @@
 			{
 				"Content-Type": "application/json"
 			},
-			{
-				orgId,
-				developerName,
-				capabilitiesVersion
-			},
-			"getUnauthenticatedJwt"
+			requestBody,
+			"sendUnauthenticatedJwtRequest"
 		).then(response => {
+			if (isRecaptchaEnabled()) {
+				hideReCaptchaBanner();
+			}
 			if (!response.ok) {
 				throw response;
 			}
 			return response.json();
 		});
+	}
+
+	/**
+	 * Handle getting an unauthenticated jwt.
+	 *
+	 * @returns {Promise}
+	 */
+	function getUnauthenticatedJwt() {
+		const orgId = embeddedservice_bootstrap.settings.orgId;
+		const developerName = embeddedservice_bootstrap.settings.eswConfigDevName;
+
+		let requestBody = {
+			orgId,
+			developerName,
+			capabilitiesVersion
+		};
+
+		if (isRecaptchaEnabled()) {
+			let recaptchaPromise = handleReCaptchaTokenGeneration();
+			return recaptchaPromise.then((captchaToken) => {
+				if (!captchaToken) {
+					throw new Error('ReCaptcha token generation failed at client.');
+				}
+				requestBody.captchaToken = captchaToken;
+				return sendUnauthenticatedJwtRequest(requestBody);
+			});
+		}
+		return sendUnauthenticatedJwtRequest(requestBody);
 	}
 
 	/**
@@ -2239,8 +2465,13 @@
 				return jwtData;
 			})
 			.catch(e => {
-				error("handleGetAuthenticatedJwt", `Error retrieving authenticated token: ${e && e.message ? e.message : e}.`);
+				if (isRecaptchaEnabled()) {
+					hideReCaptchaBanner();
+				}
+				const errorMessage = e?.message || e;
+				error("handleGetAuthenticatedJwt", `Error retrieving authenticated token: ${errorMessage}.`);
 				handleJwtRetrievalFailure();
+				throw errorMessage;
 			});
 	}
 
@@ -2249,19 +2480,21 @@
 	 * @returns {Promise}
 	 */
 	function getExpSiteAuthenticatedJwt() {
-		const requestType = "Community";
 		const developerName = embeddedservice_bootstrap.settings.eswConfigDevName;
-		const channelAddressIdentifier = embeddedservice_bootstrap.settings.embeddedServiceConfig.embeddedServiceMessagingChannel.channelAddressIdentifier || "";
-		const platformType = "Web"
+		const platformType = "Web";
 
-		// TODO: Update hardcoded variable in endpoint.
 		const endpoint = embeddedservice_bootstrap.settings.snippetConfig.expSiteUrl + EXP_SITE_ACCESS_TOKEN_PATH
-			+ `?platformType=${platformType}&requestType=${requestType}&developerName=${developerName}&channelAddressIdentifier=${channelAddressIdentifier}&capabilitiesVersion=${capabilitiesVersion}&deviceId="abcd"`;
+			+ `?platformType=${platformType}&developerName=${developerName}&capabilitiesVersion=${capabilitiesVersion}`;
 		const method = "GET";
 		const mode = "cors";
 		const caller = "getExpSiteAuthenticatedJwt";
+		// Required by service for rate limiting (HTTP 429).
+		const requestHeaders = {
+			"Cos": "0x0204",
+			"Content-Type": "application/json"
+		};
 
-		return sendFetchRequest(endpoint, method, mode, null, null, caller)
+		return sendFetchRequest(endpoint, method, mode, requestHeaders, null, caller)
 			.then(response => {
 				if (!response.ok) {
 					throw response;
@@ -2269,18 +2502,17 @@
 				return response.json();
 			})
 			.catch(err => {
-				return handleSendFetchRequestError(err, endpoint, method, mode, null, null, caller);
+				return handleSendFetchRequestError(err, endpoint, method, mode, requestHeaders, null, caller);
 			});
 	}
 
 	/**
-	 * Get a JWT for an authenticated user. This JWT is used for authenticated conversations.
+	 * Send a JWT request for an authenticated user. This JWT is used for authenticated conversations.
 	 *
+	 * @param requestBody - Depending on the captcha configuration, the requestBody will contain the captchaToken
 	 * @returns {Promise}
 	 */
-	function getAuthenticatedJwt() {
-		const orgId = embeddedservice_bootstrap.settings.orgId;
-		const developerName = embeddedservice_bootstrap.settings.eswConfigDevName;
+	function sendAuthenticatedJwtRequest(requestBody) {
 		const customerIdentityToken = identityToken;
 		const deviceInfoAsQueryParams = getDeviceInfoAsQueryParams();
 		const apiPath = deviceInfoAsQueryParams ?
@@ -2288,26 +2520,25 @@
 			embeddedservice_bootstrap.settings.scrt2URL.concat(AUTHENTICATED_ACCESS_TOKEN_PATH);
 		const method = "POST";
 		const mode = "cors";
-		const requestHeaders = { "Content-Type": "application/json" };
-		const requestBody = {
-			orgId,
-			developerName,
-			capabilitiesVersion,
-			"authorizationType": ID_TOKEN_TYPE.JWT,
-			customerIdentityToken
-		};
-		const caller = "getAuthenticatedJwt";
-
+		const requestHeaders = {"Content-Type": "application/json"};
+		const caller = "sendAuthenticatedJwtRequest";
 		if (customerIdentityToken && validateJwt(customerIdentityToken)) {
 			// Send fetch request if identity token has not expired.
 			return sendFetchRequest(apiPath, method, mode, requestHeaders, requestBody, caller)
 				.then(response => {
+					if (isRecaptchaEnabled()) {
+						hideReCaptchaBanner();
+					}
 					if (!response.ok) {
 						throw response;
 					}
+					initializeChatUnavailableState();
 					return response.json();
 				})
 				.catch(err => {
+					if (isRecaptchaEnabled()) {
+						hideReCaptchaBanner();
+					}
 					return handleSendFetchRequestError(err, apiPath, method, mode, requestHeaders, requestBody, caller);
 				});
 		}
@@ -2316,11 +2547,45 @@
 		return new Promise(resolve => {
 			handleIdentityTokenExpiry({ apiPath, method, mode, requestHeaders, requestBody, resolve });
 		}).then(response => {
+			if (isRecaptchaEnabled()) {
+				hideReCaptchaBanner();
+			}
 			if (!response.ok) {
 				throw response;
 			}
 			return response.json();
 		});
+	}
+
+	/**
+	 * Handle getting an authenticated jwt.
+	 *
+	 * @returns {Promise}
+	 */
+	function getAuthenticatedJwt() {
+		const orgId = embeddedservice_bootstrap.settings.orgId;
+		const developerName = embeddedservice_bootstrap.settings.eswConfigDevName;
+		const customerIdentityToken = identityToken;
+
+		let requestBody = {
+			orgId,
+			developerName,
+			capabilitiesVersion,
+			"authorizationType": ID_TOKEN_TYPE.JWT,
+			customerIdentityToken
+		};
+
+		if (isRecaptchaEnabled()) {
+			let recaptchaPromise = handleReCaptchaTokenGeneration();
+			return recaptchaPromise.then((captchaToken) => {
+				if (!captchaToken) {
+					throw new Error('ReCaptcha token generation failed at client.');
+				}
+				requestBody.captchaToken = captchaToken;
+				return sendAuthenticatedJwtRequest(requestBody);
+			});
+		}
+		return sendAuthenticatedJwtRequest(requestBody);
 	}
 
 	/**
@@ -2469,8 +2734,11 @@
 				throw new Error(err);
 			});
 		}
-
-		throw new Error(`Error retrieving unauthenticated token: ${e}.`);
+		if (isRecaptchaEnabled()) {
+			hideReCaptchaBanner();
+		}
+		const errorMessage = e?.message || e;
+		throw new Error(`Error retrieving unauthenticated token: ${errorMessage}.`);
 	}
 
 	/**
@@ -2563,6 +2831,7 @@
 	 */
 	function createNewConversation(routingAttributes) {
 		const endpoint = embeddedservice_bootstrap.settings.scrt2URL.concat(CONVERSATION_PATH);
+		const language = embeddedservice_bootstrap.settings.language;
 
 		return sendRequest(
 			endpoint,
@@ -2571,7 +2840,8 @@
 			null,
 			{
 				...(routingAttributes && { routingAttributes }),
-				conversationId
+				conversationId,
+				language
 			},
 			"createNewConversation"
 		).then(response => response.json());
@@ -2768,6 +3038,7 @@
 	 * @returns {Promise}
 	 */
 	function sendRequest(apiPath, method, mode, requestHeaders, requestBody, caller) {
+		initializeChatUnavailableState();
 		return sendFetchRequest(apiPath, method, mode, requestHeaders, requestBody, caller)
 			.catch(err => {
 				return handleSendFetchRequestError(err, apiPath, method, mode, requestHeaders, requestBody, caller);
@@ -2934,27 +3205,19 @@
 	}
 
 	/**
-	 * Returns the custom header color branding token value for button background color.
-	 * @return {String}
-	 */
-	function getButtonColorFromBrandingConfig() {
-		return getTokenValueFromBrandingConfig("headerColor");
-	}
-
-	/**
-	 * Returns the custom secondary color branding token value for focus borders.
-	 * @return {String}
-	 */
-	function getButtonFocusBorderColorFromBrandingConfig() {
-		return getTokenValueFromBrandingConfig("secondaryColor");
-	}
-
-	/**
 	 * Returns the font branding token value for minimized notification area.
 	 * @return {String}
 	 */
 	function getFontFamilyFromBrandingConfig() {
 		return getTokenValueFromBrandingConfig("font");
+	}
+
+	/**
+	 * Returns the FAB image url token value for customizing the button.
+	 * @return {String}
+	 */
+	function getCustomButtonIconUrlFromBrandingConfig() {
+		return getTokenValueFromBrandingConfig("fabImage");
 	}
 
 	/**
@@ -2982,38 +3245,46 @@
 		let button = getEmbeddedMessagingConversationButton();
 		let iconContainer = document.getElementById(EMBEDDED_MESSAGING_ICON_CONTAINER);
 		let chatIcon = document.getElementById(EMBEDDED_MESSAGING_ICON_CHAT);
-		let loadingSpinner = document.createElement("div");
+		let progressIndicator = document.createElement("div");
 		let assistiveTextElement = document.createElement("span");
-		let circle;
-		let i = 1;
 
 		if(button) {
 			// Hide the default chat icon on the button.
 			chatIcon.style.display = "none";
 
-			// [Animations] Build loading spinner.
-			loadingSpinner.setAttribute("class", EMBEDDED_MESSAGING_LOADING_SPINNER);
-			loadingSpinner.setAttribute("id", EMBEDDED_MESSAGING_LOADING_SPINNER);
-			for(; i < 13; i++) {
-				circle = document.createElement("div");
-				circle.setAttribute("class", EMBEDDED_MESSAGING_LOADING_CIRCLE + i + " " + EMBEDDED_MESSAGING_LOADING_CIRCLE);
-				loadingSpinner.appendChild(circle);
-			}
+			// [Animations] Build loading progress indicator.
+			progressIndicator.setAttribute("class", EMBEDDED_MESSAGING_ICON_PROGRESS_INDICATOR);
+			progressIndicator.setAttribute("id", EMBEDDED_MESSAGING_ICON_PROGRESS_INDICATOR);
 
-			loadingSpinner.classList.add(EMBEDDED_MESSAGING_ICON_LOADING);
+			let outerArc = renderSVG(DEFAULT_ICONS.OUTER_ARC);
+			outerArc.setAttribute("class", EMBEDDED_MESSAGING_ICON_OUTER_ARC);
+
+			let innerArc = renderSVG(DEFAULT_ICONS.INNER_ARC);
+			innerArc.setAttribute("class", EMBEDDED_MESSAGING_ICON_INNER_ARC);
+
+			progressIndicator.appendChild(outerArc);
+			progressIndicator.appendChild(innerArc);
 
 			// Set loading state for the button.
 			button.classList.add(CONVERSATION_BUTTON_LOADING_CLASS);
 			// Load the animations for button.
-			iconContainer.insertBefore(loadingSpinner, chatIcon);
+			iconContainer.insertBefore(progressIndicator, chatIcon);
 			button.disabled = true;
 
 			// [A11Y] Screen reader announce loading status
 			assistiveTextElement.className = SLDS_ASSISTIVE_TEXT;
 			assistiveTextElement.setAttribute("role", "alert");
 			assistiveTextElement.innerHTML = getLabel("EmbeddedMessagingPrechat", "PrechatSubmitButtonLoading") || CHAT_BUTTON_LOADING_ASSISTIVE_TEXT;
-			loadingSpinner.appendChild(assistiveTextElement);
+			progressIndicator.appendChild(assistiveTextElement);
 		}
+	}
+
+	/**
+	 * Returns the background color for chat button on hover.
+	 * @return {String}
+	 */
+	function getButtonHoverColor() {
+		return ColorContrastAccessibility.getHoverBackgroundColor(getTokenValueFromBrandingConfig("chatButton"));
 	}
 
 	/**
@@ -3120,9 +3391,9 @@
 
 				// Fires an event to the host to indicate business hours interval change.
 				if (isCurrentlyWithinBH) {
-					dispatchEventToHost(ON_EMBEDDED_MESSAGING_BUSINESS_HOURS_ENDED_EVENT_NAME);
-				} else {
 					dispatchEventToHost(ON_EMBEDDED_MESSAGING_BUSINESS_HOURS_STARTED_EVENT_NAME);
+				} else {
+					dispatchEventToHost(ON_EMBEDDED_MESSAGING_BUSINESS_HOURS_ENDED_EVENT_NAME);
 				}
 
 			}, (targetTime - Date.now()));
@@ -3134,6 +3405,8 @@
 	 * @param {boolean} wasWithinBusinessHours - If the app was within business hours when the timer was set.
 	 */
 	function businessHoursTimerCallback(wasWithinBusinessHours) {
+		// Clear the agent availability timer before handling business hours change callback
+		clearAgentAvailabilityTimer();
 		if (wasWithinBusinessHours) {
 			// Clean up stale interval
 			businessHoursInterval = undefined;
@@ -3148,7 +3421,15 @@
 				});
 		} else {
 			if (!isChannelMenuDeployment()) {
-				embeddedservice_bootstrap.utilAPI.showChatButton();
+				const agentAvailabilityPromise = isAgentAvailabilityCheckEnabled()
+					? getAgentAvailability()
+					: Promise.resolve(true);
+
+				agentAvailabilityPromise.then(() => {
+					if (isWithinBusinessHours()) {
+						embeddedservice_bootstrap.utilAPI.showChatButton();
+					}
+				});
 			}
 
 			// Attempt to set subsequent business hours timer.
@@ -3273,6 +3554,193 @@
 	};
 
 	/**
+	 * Returns true if invitations are enabled.
+	 *
+	 * @returns {boolean}
+	 */
+	function hasInvitationsEnabled() {
+		return embeddedservice_bootstrap.settings.embeddedServiceConfig.invitation;
+	}
+
+	/**
+	 * Returns true if custom invitations are enabled.
+	 *
+	 * @returns {boolean}
+	 */
+	function hasCustomInvitationsEnabled() {
+		const invitationSetting = embeddedservice_bootstrap.settings.embeddedServiceConfig.invitation || {};
+		return Boolean(invitationSetting.isChatInvitationCustomizable);
+	}
+
+	/**
+	 * Returns a DOM reference to the inert script tag
+	 *
+	 * @returns {object}
+	 */
+	function getInvitationScript() {
+		return document.getElementById(INVITATION_SCRIPT_ID);
+	}
+
+	/**
+	 * Create script and initialize invitation script.
+	 * @param {integer} pageStartTime - Initial time that page was loaded.
+	 * 
+	 */
+	function initializeInvitations(pageStartTime) {
+	    // Check if invitation should be shown based on previous actions and settings
+		if (!shouldShowInvitationBasedOnPreviousActions()) {
+			log("initializeInvitations", "Skipping invitation initialization due to previous actions and settings");
+			return;
+		}
+
+		// Create and load invitation script
+		if (!getInvitationScript()) {
+			const script = document.createElement("script");
+			const invitationURL = `${getSiteURL()}/assets/js/invitation${(embeddedservice_bootstrap.settings.devMode ? "" : ".min")}.js`;
+
+			script.id = INVITATION_SCRIPT_ID;
+			script.type = 'text/javascript';
+			script.src = invitationURL;
+
+			script.onload = () => {
+				embeddedservice_bootstrap.invitations = window.embeddedservice_invitations;
+				embeddedservice_bootstrap.invitations.initialize(pageStartTime);
+			};
+			embeddedservice_bootstrap.settings.targetElement.appendChild(script);
+		} else {
+			embeddedservice_bootstrap.invitations.initialize(pageStartTime);
+		}
+
+		// Store/update page count in local storage
+		const currentPageCount = getItemInWebStorageByKey(STORAGE_KEYS.PAGE_COUNT)
+		if (!currentPageCount) {
+            setItemInWebStorage(STORAGE_KEYS.PAGE_COUNT, 1, true);
+        } else {
+            setItemInWebStorage(STORAGE_KEYS.PAGE_COUNT, parseInt(currentPageCount) + 1, true);
+        }
+
+		// Store initial time site was visited
+		if (!getItemInWebStorageByKey(STORAGE_KEYS.SITE_TIME)) {
+            setItemInWebStorage(STORAGE_KEYS.SITE_TIME, Date.now(), true);
+        } 
+	};
+
+	/**
+	 * Handle showing the invitation when rule conditions evaluate to true.
+	 */
+	function handleInvitationConditionsMet() {
+		// Check if invitation should be shown again based on previous actions and settings
+		if (!shouldShowInvitationBasedOnPreviousActions()) {
+			log("handleInvitationConditionsMet", "Invitation conditions met but should not show invitation based on settings/previous actions");
+
+			// Reset invitation rules even if we don't show the invitation
+			embeddedservice_bootstrap.invitations.reset();
+			return;
+		}
+
+		// Check if using custom invitation
+		if (hasCustomInvitationsEnabled()) {
+			// Only dispatch the event, don't show the invitation
+			dispatchEventToHost(ON_EMBEDDED_MESSAGING_INVITATION_SHOWN_EVENT_NAME);
+			log("handleInvitationConditionsMet", "Default invitation skipped to allow custom invitation");
+			
+			// Reset invitation rules even if we don't show the invitation
+			embeddedservice_bootstrap.invitations.reset();
+			return;
+		}
+
+		const button = getEmbeddedMessagingConversationButton();
+
+		if (!button) {
+			return;
+		}
+
+		if (button.style.display === "none") {
+			// Do not show invitation if outside of business hours or agent availability is enabled and there is no available agents 
+			if (!isWithinBusinessHours() || isAgentAvailabilityCheckEnabled()) {
+				return;
+			} 
+			embeddedservice_bootstrap.utilAPI.showChatButton();	
+		} else {
+			// Handle invitation conditions accept/reject logic
+			minimizedNotification = createMinimizedNotification(getLabel("EmbeddedMessagingInvitationWindow", "InvitationBodyText") || MINIMIZED_NOTIFICATION_AREA_INVITATIONS_DEFAULT_TEXT, true);
+
+			button.parentNode.insertBefore(minimizedNotification, button);
+
+			dispatchEventToHost(ON_EMBEDDED_MESSAGING_INVITATION_SHOWN_EVENT_NAME);
+
+			log("handleInvitationConditionsMet", "Invitation shown");
+
+			// Reset invitation rules
+			embeddedservice_bootstrap.invitations.reset();
+		}
+	}
+
+	/**
+	 * Check if invitation should be shown after accepting based on settings
+	 * @returns {boolean} Whether invitation should be shown after accepting
+	 */
+	function shouldShowInvitationAfterAccepting() {
+		const invitationSetting = embeddedservice_bootstrap.settings.embeddedServiceConfig.invitation;
+		return Boolean(invitationSetting.isSendInvtAllowedAfterAccept);
+	}
+
+	/**
+	 * Check if invitation should be shown after rejecting based on settings
+	 * @returns {boolean} Whether invitation should be shown after rejecting
+	 */
+	function shouldShowInvitationAfterRejecting() {
+		const invitationSetting = embeddedservice_bootstrap.settings.embeddedServiceConfig.invitation;
+		return Boolean(invitationSetting.isSendInvtAllowedAfterReject);
+	}
+
+	/**
+	 * Check if invitation has been previously accepted
+	 * @returns {boolean} Whether invitation has been accepted before
+	 */
+	function hasInvitationBeenAccepted() {
+		return Boolean(getItemInWebStorageByKey(STORAGE_KEYS.INVITATION_ACCEPTED, true));
+	}
+
+	/**
+	 * Check if invitation has been previously rejected
+	 * @returns {boolean} Whether invitation has been rejected before
+	 */
+	function hasInvitationBeenRejected() {
+		return Boolean(getItemInWebStorageByKey(STORAGE_KEYS.INVITATION_REJECTED, true));
+	}
+
+	/**
+	 * Check if invitation should be shown based on previous actions and settings
+	 * @returns {boolean} Whether invitation should be shown
+	 */
+	function shouldShowInvitationBasedOnPreviousActions() {
+		return hasInvitationsEnabled() &&
+			(shouldShowInvitationAfterAccepting() || !hasInvitationBeenAccepted()) &&
+       		(shouldShowInvitationAfterRejecting() || !hasInvitationBeenRejected());
+	}
+
+	/**
+	 * Handle invitation accept/reject event dispatch and storage
+	 * @param {boolean} isAccept - Whether this is an accept or reject
+	 */
+	function handleInvitationNotificationAction(isAccept) {
+		const config = isAccept ? {
+			storageKey: STORAGE_KEYS.INVITATION_ACCEPTED,
+			eventName: ON_EMBEDDED_MESSAGING_INVITATION_ACCEPTED_EVENT_NAME,
+			logMessage: "Invitation accepted"
+		} : {
+			storageKey: STORAGE_KEYS.INVITATION_REJECTED,
+			eventName: ON_EMBEDDED_MESSAGING_INVITATION_REJECTED_EVENT_NAME,
+			logMessage: "Invitation rejected"
+		};
+
+		setItemInWebStorage(config.storageKey, Date.now(), true);
+		dispatchEventToHost(config.eventName);
+		log("handleInvitationNotificationAction", config.logMessage);
+	}
+
+	/**
 	 * Toggles the inert attribute on background elements for the page.
 	 * The inert attribute needs to be set on sibling elements of the iframe on the page.
 	 * @param {boolean} inertEnabled - Whether inert should be enabled on elements.
@@ -3300,6 +3768,40 @@
 			messagingContainer.inert = inertEnabled;
 		}
 	}
+
+	/**
+	 * Create a live region announcer on the parent page.
+	 */
+	function addLiveRegionAnnouncer() {
+		const liveRegion = document.createElement("div");
+
+		liveRegion.id = "embeddedMessagingLiveRegion";
+		liveRegion.setAttribute("aria-live", "assertive");
+		liveRegion.setAttribute("aria-atomic", "true");
+		liveRegion.classList.add("embeddedMessagingLiveRegion");
+
+		getEmbeddedMessagingTopContainer().appendChild(liveRegion);
+	};
+
+	/**
+	 * [A11Y] Populate the live region.
+	 * @param {Object} data - Contains text to announce.
+	 */
+	function handleScreenReaderAnnouncement(data) {
+		const liveRegion = document.getElementById("embeddedMessagingLiveRegion");
+
+		liveRegion.textContent = data.text;
+
+		if (liveRegionAnnouncerTimer) {
+			clearTimeout(liveRegionAnnouncerTimer);
+		}
+
+		liveRegionAnnouncerTimer = setTimeout(() => {
+			// Clear live region content
+			liveRegion.textContent = '';
+		}, 3000);
+	}
+
 
 	/**
 	 * Sets viewport meta content back to the original value
@@ -3421,6 +3923,9 @@
 				let button = getEmbeddedMessagingConversationButton();
 				let frame = embeddedservice_bootstrap.utilAPI.getEmbeddedMessagingFrame();
 
+				// Remove minimized notification
+				handleNotificationDismissButtonClick();
+
 				// eslint-disable-next-line no-negated-condition
 				if(button && !button.classList.contains(CONVERSATION_BUTTON_LOADED_CLASS)) {
 					// W-13899900 - Join existing session if JWT is found in web storage.
@@ -3445,24 +3950,46 @@
 
 					log("handleClick", `Conversation button clicked`);
 
-					// Create iframes and load app.
-					generateIframes().then(() => {
-						resolve();
-					}).catch((err) => {
-						error("handleClick", err.message);
-						reject(err);
-					});
+					// Clear agent availability timer
+					clearAgentAvailabilityTimer();
 
-					// Initialize conversation state and fetch messaging JWTs if functional fallback is not enabled.
-					if (hasFunctionalFallbackEnabled()) {
-						initializeChatUnavailableState();
-					} else {
-						initializeConversationState().catch((err) => {
-							emitEmbeddedMessagingInitErrorEvent();
+					const agentAvailabilityDataPromise = isAgentAvailabilityCheckEnabled()
+						? getAgentAvailabilityData()
+						: Promise.resolve(true);
+					agentAvailabilityDataPromise.then((isAgentAvailable) => {
+						log("handleClick", `Received getAgentAvailability API response after button click: ${isAgentAvailable}`);
+						if (isAgentAvailable === false) {
+							handleAgentUnavailableOnButtonClick();
+							reject("Agent Unavailable");
+							return;
+						}
+
+						// Create iframes and load app.
+						generateIframes().then(() => {
+							resolve();
+						}).catch((err) => {
 							error("handleClick", err.message);
 							reject(err);
 						});
-					}
+
+						// Initialize conversation state and fetch messaging JWTs if functional fallback is not enabled.
+						if (hasFunctionalFallbackEnabled()) {
+							initializeChatUnavailableState();
+						} else {
+							initializeConversationState().catch((err) => {
+								emitEmbeddedMessagingInitErrorEvent();
+								error("handleClick", err.message);
+								reject(err);
+							});
+						}
+
+						if (hasInvitationsEnabled()) {
+							embeddedservice_bootstrap.invitations.reset();
+						}
+					}).catch((err) => {
+						error("handleClick", `Failed to retrieve Agent Availability data. Returning with the default value as agentAvailable : false ${err}`);
+						reject(err);
+					});
 				} else if((button && button.classList.contains(CONVERSATION_BUTTON_LOADED_CLASS)) && (frame && frame.classList && frame.classList.contains(MODAL_ISMAXIMIZED_CLASS))) {
 					// Minimize the chat if it is already maximized.
 					sendPostMessageToAppIframe(APP_MINIMIZE_EVENT_NAME);
@@ -3474,6 +4001,40 @@
 			}
 		});
 
+	}
+
+	/**
+	 * Handle the scenario where the agents are unavailable after button is clicked.
+	 * This will reset the client to initial state, enable the button with the fab icon and show a minimized notification with the custom message
+	 */
+	function handleAgentUnavailableOnButtonClick() {
+		let button;
+		let minimizedNotification;
+
+		// Handle client reset and surface error state only in the primary tab.
+		// In clearing the web storage, this should trigger user session clearing in secondary tabs.
+		// Here we do not want to check agent availability because it will setup the timer and
+		// check the availability every 30 seconds, which is not intended here.
+		resetClientToInitialState(false, false);
+
+		// Generate markup for button.
+		embeddedservice_bootstrap.generateMarkup();
+
+		// Use selectors to find DOM elements.
+		button = getEmbeddedMessagingConversationButton();
+
+		if(button) {
+			// Static button is displayed under client when maximized.
+			button.style.display = "block";
+
+			// Hide the ReCaptcha Banner
+			if (isRecaptchaEnabled()) {
+				hideReCaptchaBanner();
+			}
+
+			minimizedNotification = createMinimizedNotification(getLabel("EmbeddedMessagingMinimizedState", "AgentUnavailableText") || MINIMIZED_NOTIFICATION_AREA_AGENT_UNAVAILABLE_DEFAULT_TEXT);
+			embeddedservice_bootstrap.settings.targetElement.appendChild(minimizedNotification);
+		}
 	}
 
 	/**
@@ -3500,15 +4061,22 @@
 
 	/**
 	 * Handles notification area dismiss button click.
+	 * @param isUserDismiss - Whether user directly dismisses or dismisses by handleClick()
 	 */
-	function handleNotificationDimissButtonClick() {
+	function handleNotificationDismissButtonClick(isUserDismiss = false) {
 		const notificationArea = document.getElementById(MINIMIZED_NOTIFICATION_AREA_CLASS);
 		const button = getEmbeddedMessagingConversationButton();
 
 		// Removes the notification area.
 		if (notificationArea) {
+			// For invitations, store dismiss as reject in local storage
+			if (isUserDismiss && notificationArea.getAttribute("is-invitation") === "true") {
+				handleInvitationNotificationAction(false);
+			}
+			
 			notificationArea.parentNode.removeChild(notificationArea);
 		}
+
 		// Move focus to minimized button in minimized state.
 		if (button) {
 			button.focus();
@@ -3519,11 +4087,11 @@
 	 * Handles notification area dismiss button key down.
 	 * @param evt
 	 */
-	function handleDimissButtonKeyDown(evt) {
+	function handleDismissButtonKeyDown(evt) {
 		if (evt.key === KEY_CODES.ENTER || evt.key === KEY_CODES.SPACE) {
-			// ENTER or SPACE dismisses the minimized notification
+			// ENTER or SPACE dismisses the notification
 			evt.preventDefault();
-			this.handleNotificationDimissButtonClick();
+			handleNotificationDismissButtonClick(true);
 		}
 	}
 
@@ -3567,6 +4135,9 @@
 	 * 1. user verification change (going from a verified to an unverified deployment)
 	 * 2. language-specific auto-response change (customer has language-specific auto-responses configured)
 	 * 3. any other channel setting change (like routing, consent keywords, file attachment, inactivity rules)
+	 *
+	 * When the client is using session based auth mode in exp site, if there is an existing jwt in storage
+	 * We will check if the current user ID matches with the user ID that is in the JWT, if they don't match then we will invoke clearSession to prevent showing conversation from another user.
 	 */
 	function handleExistingSession() {
 		messagingJwt = getItemInWebStorageByKey(STORAGE_KEYS.JWT);
@@ -3575,10 +4146,17 @@
 		const jwtPayload = parseJwt(messagingJwt) || {};
 		// Extract channelAddId claim.
 		const channelAddIdFromJwt = jwtPayload[MESSAGING_JWT_CHANNEL_ADD_ID_CLAIM] || "";
+		// Extract userId.
+		const userIdFromJwt = jwtPayload[MESSAGING_JWT_USER_ID_CLAIM] || "";
 
-		if (embeddedservice_bootstrap.settings.restrictSessionOnMessagingChannel && (channelAddIdFromConfig !== channelAddIdFromJwt)) {
+		if ((embeddedservice_bootstrap.settings.restrictSessionOnMessagingChannel && (channelAddIdFromConfig !== channelAddIdFromJwt)) || (getAuthMode() === AUTH_MODE.EXP_SITE_AUTH && userIdFromJwt !== embeddedservice_bootstrap.settings.snippetConfig.userId)) {
 			embeddedservice_bootstrap.userVerificationAPI.clearSession();
 			return;
+		}
+
+		// Same user refreshed the page, call the timer
+		if (getAuthMode() === AUTH_MODE.EXP_SITE_AUTH) {
+			getExpSiteSessionTimeout();
 		}
 
 		embeddedservice_bootstrap.generateMarkup(true);
@@ -3593,7 +4171,7 @@
 		let button = getEmbeddedMessagingConversationButton();
 		let iconContainer = document.getElementById(EMBEDDED_MESSAGING_ICON_CONTAINER);
 		let chatIcon = document.getElementById(EMBEDDED_MESSAGING_ICON_CHAT);
-		let loadingSpinner = document.getElementById(EMBEDDED_MESSAGING_LOADING_SPINNER);
+		let progressIndicator = document.getElementById(EMBEDDED_MESSAGING_ICON_PROGRESS_INDICATOR);
 		let iframe = embeddedservice_bootstrap.utilAPI.getEmbeddedMessagingFrame();
 
 		if(!iframe) {
@@ -3604,8 +4182,8 @@
 			warning("handleAfterAppLoad", "Embedded Messaging static button not available for post-app-load updates.");
 		} else {
 			// Reset the Conversation button once the aura application is loaded in the iframe. Ifame/Chat window is rendered on top of FAB.
-			if (iconContainer && loadingSpinner) {
-				iconContainer.removeChild(loadingSpinner);
+			if (iconContainer && progressIndicator) {
+				iconContainer.removeChild(progressIndicator);
 			}
 
 			if (chatIcon) {
@@ -3644,8 +4222,11 @@
 	 * clearing the user session in Auth mode.
 	 * This method resets the client to the initial state (State Zero) for Auth/Unauth modes.
 	 * @param isSecondaryTab - Whether we are trying to reset the client to initial state in a secondary tab. Only used by Auth mode.
+	 * @param checkAgentAvailability - Whether to check agent availability before client initialization.
+	 * If true, it will keep calling agent availability API every 30 seconds until agent is available ,
+	 * and will create a timer that will keep checking for agent availability and show/hide chat button accordingly.
 	 */
-	function resetClientToInitialState(isSecondaryTab) {
+	function resetClientToInitialState(isSecondaryTab, checkAgentAvailability = true) {
 		log("resetClientToInitialState", `Resetting client to initial state.`);
 		try {
 			// Clear existing items stored in current conversation
@@ -3671,8 +4252,29 @@
 		// Remove markup from the page.
 		embeddedservice_bootstrap.removeMarkup();
 
+		const agentAvailabilityPromise = isAgentAvailabilityCheckEnabled() && checkAgentAvailability
+			? getAgentAvailability()
+			: Promise.resolve(true);
+
+		agentAvailabilityPromise.then(() => {
+			//Load ReCaptcha scripts
+			if (shouldLoadReCaptchaScript()) {
+				let recaptchaPromise = loadReCaptchaScript();
+				recaptchaPromise.then(() => initializeClientState());
+			} else {
+				initializeClientState();
+			}
+		});
+	}
+
+	function initializeClientState() {
 		// Regenerate markup if we are in unverified user mode.
-		if (getAuthMode() === AUTH_MODE.UNAUTH) {
+		// OR if the user is logged into experience site with session-based auth mode.
+		if (getAuthMode() === AUTH_MODE.UNAUTH || (getAuthMode() === AUTH_MODE.EXP_SITE_AUTH && !embeddedservice_bootstrap.settings.snippetConfig.isExpSiteGuestUser)) {
+			if (getAuthMode() === AUTH_MODE.EXP_SITE_AUTH) {
+				getExpSiteSessionTimeout();
+			}
+
 			embeddedservice_bootstrap.generateMarkup();
 
 			if (getEmbeddedMessagingConversationButton()) {
@@ -3792,7 +4394,19 @@
 		}
 
 		const buttonIconWrapper = document.createElement("div");
-		const buttonIconElement = renderSVG(DEFAULT_ICONS.CHAT);
+		const customButtonIconUrl = getCustomButtonIconUrlFromBrandingConfig();
+		let buttonIconElement;
+		// If the customButtonIconUrl is valid use that, Otherwise use the default icon.
+		if (customButtonIconUrl && customButtonIconUrl.length > 0) {
+			buttonIconElement = document.createElement("img");
+			buttonIconElement.src = customButtonIconUrl;
+			// Accessibility attributes for decorative images
+			buttonIconElement.setAttribute("alt", "");
+			buttonIconElement.setAttribute("aria-hidden", "true");
+		} else {
+			// Create an SVG element with default icon.
+			buttonIconElement = renderSVG(DEFAULT_ICONS.CHAT);
+		}
 
 		buttonIconElement.setAttribute("id", EMBEDDED_MESSAGING_ICON_CHAT);
 		buttonIconElement.setAttribute("class", EMBEDDED_MESSAGING_ICON_CHAT);
@@ -3833,10 +4447,10 @@
 		// [A11Y] Assistive text
 		buttonElement.setAttribute("title", getLabel("EmbeddedMessagingMinimizedState", "DefaultMinimizedText") || CONVERSATION_BUTTON_DEFAULT_ASSISTIVE_TEXT);
 
-		// Update the color of FAB to match the color of Chat Header, i.e. --headerColor branding token from setup.
-		buttonElement.style.setProperty("--eswHeaderColor", getButtonColorFromBrandingConfig());
-		// Update the focus border color to match the Secondary Color, i.e. --secondaryColor branding token from setup.
-		buttonElement.style.setProperty("--eswSecondaryColor", getButtonFocusBorderColorFromBrandingConfig());
+		// Update the color of FAB to match the color of Chat Button, i.e. --chatButton branding token from setup.
+		buttonElement.style.setProperty("--eswButtonColor", getTokenValueFromBrandingConfig("chatButton"));
+		// Update the hover color to be a shade of the FAB color.
+		buttonElement.style.setProperty("--eswButtonHoverColor", getButtonHoverColor());
 
 		// Adjust button height if browser has bottom tab bar.
 		if(embeddedservice_bootstrap.settings.hasBottomTabBar) {
@@ -3866,6 +4480,25 @@
 	}
 
 	/**
+	 * Converts line breaks (<br>) to proper HTML.
+	 *
+	 * @param {string} text - The input markdown text
+	 * @returns {string} - The parsed HTML string
+	 */
+	function parseInvitationMarkdown(text) {
+		if (!text) {
+			return "";
+		}
+
+		try {
+			return text.replace(/<br>/gi, '<br/>');
+		} catch (e) {
+			error("parseInvitationMarkdown", `Failed to parse invitation markdown.`)
+			return "";
+		}
+	}
+
+	/**
 	 * Generates markup for the background overlay (for modal view displayed on mobile only).
 	 * @return {HTMLElement}
 	 */
@@ -3879,9 +4512,11 @@
 
 	/**
 	 * Generates markup for the minimized notification area element.
+	 * @param {string} notificationText - The notification text to display
+	 * @param {boolean} isInvitation - Whether the notification is invitation
 	 * @returns {HTMLElement}
 	 */
-	function createMinimizedNotifaction() {
+	function createMinimizedNotification(notificationText, isInvitation = false) {
 		const notificationElement = document.createElement("div");
 		const notificationTextWrapperElement = document.createElement("div");
 		const notificationTextElement = document.createElement("span");
@@ -3891,13 +4526,45 @@
 		notificationElement.id = MINIMIZED_NOTIFICATION_AREA_CLASS;
 		notificationElement.className = MINIMIZED_NOTIFICATION_AREA_CLASS;
 
+		// Update the color of notification to match the color of Chat Button, i.e. --chatButton branding token from setup.
+		notificationElement.style.setProperty("--eswNotificationBackgroundColor", getTokenValueFromBrandingConfig("chatButton"));
+
+		// Set HTML direction based on language
+		if (embeddedservice_bootstrap.settings.embeddedServiceConfig.htmlDirection && typeof embeddedservice_bootstrap.settings.embeddedServiceConfig.htmlDirection === "string") {
+			notificationElement.setAttribute("dir", embeddedservice_bootstrap.settings.embeddedServiceConfig.htmlDirection.toLowerCase());
+		}
+
+		if (isInvitation) {
+			notificationElement.setAttribute("is-invitation", "true");
+			notificationElement.style.cursor = "pointer";
+			
+			// Handle invitation acceptance when user clicks the notification area (excluding dismiss button)
+			notificationElement.addEventListener("click", function(event) {
+				if (event && event.target && !event.target.closest("." + MINIMIZED_NOTIFICATION_DISMISS_BTN_CLASS)) {
+					handleInvitationNotificationAction(true);
+					
+					handleClick();
+				}
+			});
+		}
+
 		notificationTextWrapperElement.className = MINIMIZED_NOTIFICATION_AREA_TEXT_WRAPPER_CLASS;
+		// Set HTML direction based on language
+		if (embeddedservice_bootstrap.settings.embeddedServiceConfig.htmlDirection && typeof embeddedservice_bootstrap.settings.embeddedServiceConfig.htmlDirection === "string") {
+			notificationTextWrapperElement.setAttribute("dir", embeddedservice_bootstrap.settings.embeddedServiceConfig.htmlDirection.toLowerCase());
+		}
 
 		notificationTextElement.className = MINIMIZED_NOTIFICATION_AREA_TEXT_CLASS;
+		// Set HTML direction based on language
+		if (embeddedservice_bootstrap.settings.embeddedServiceConfig.htmlDirection && typeof embeddedservice_bootstrap.settings.embeddedServiceConfig.htmlDirection === "string") {
+			notificationTextElement.setAttribute("dir", embeddedservice_bootstrap.settings.embeddedServiceConfig.htmlDirection.toLowerCase());
+		}
+
 		notificationTextElement.role = "status";
-		notificationTextElement.title = getLabel("EmbeddedMessagingMinimizedState", "JWTRetrievalFailureText") || MINIMIZED_NOTIFICATION_AREA_DEFAULT_TEXT;
-		notificationTextElement.innerHTML = getLabel("EmbeddedMessagingMinimizedState", "JWTRetrievalFailureText") || MINIMIZED_NOTIFICATION_AREA_DEFAULT_TEXT;
+		notificationTextElement.title = notificationText;
+		notificationTextElement.innerHTML = parseInvitationMarkdown(notificationText);
 		notificationTextElement.style.setProperty("font-family", getFontFamilyFromBrandingConfig());
+		notificationTextElement.style.setProperty("--eswNotificationTextColor", getTokenValueFromBrandingConfig("invitationText"));
 
 		notificationAssistiveTextElement.className = SLDS_ASSISTIVE_TEXT;
 		notificationAssistiveTextElement.innerHTML = getLabel("EmbeddedMessagingMinimizedState", "MinimizedNotificationAssistiveText") || MINIMIZED_NOTIFICATION_AREA_DEFAULT_ASSISTIVE_TEXT;
@@ -3916,23 +4583,31 @@
 	 */
 	function createMinimizedNotificationDimissButton() {
 		const buttonElement = document.createElement("button");
-		const buttonTextElement = document.createElement("span");
+		const buttonIconElement = document.createElement("span");
 		const buttonAssistiveTextElement = document.createElement("span");
 
 		buttonElement.className = MINIMIZED_NOTIFICATION_DISMISS_BTN_CLASS;
-		buttonElement.addEventListener("click", handleNotificationDimissButtonClick);
-		buttonElement.addEventListener("keydown", handleDimissButtonKeyDown);
+		buttonElement.addEventListener("click", (event) => {
+			event.stopPropagation();
+			handleNotificationDismissButtonClick(true);
+		});
+		buttonElement.addEventListener("keydown", handleDismissButtonKeyDown);
 		buttonElement.setAttribute("aria-describedby", MINIMIZED_NOTIFICATION_DISMISS_BTN_ID);
 
-		buttonTextElement.className = MINIMIZED_NOTIFICATION_DISMISS_BTN_TEXT_CLASS;
-		buttonTextElement.title = getLabel("EmbeddedMessagingMinimizedState", "NotificationDismissButtonText") || MINIMIZED_NOTIFICATION_DISMISS_BTN_DEFAULT_TEXT;
-		buttonTextElement.innerHTML = getLabel("EmbeddedMessagingMinimizedState", "NotificationDismissButtonText") || MINIMIZED_NOTIFICATION_DISMISS_BTN_DEFAULT_TEXT;
-		buttonTextElement.style.setProperty("font-family", getFontFamilyFromBrandingConfig());
+		buttonElement.style.setProperty("--eswNotificationButtonColor", getTokenValueFromBrandingConfig("invitationDismissalButton"));
+		buttonElement.style.setProperty("--eswNotificationButtonHoverColor", getButtonHoverColor());
+
+		buttonIconElement.className = MINIMIZED_NOTIFICATION_DISMISS_BTN_TEXT_CLASS;
+		
+		// Create the dismiss svg and insert into the DOM.
+		buttonIconElement.appendChild(renderSVG(DEFAULT_ICONS.DISMISS));
+		buttonIconElement.setAttribute("aria-hidden", "true");
+		
 		buttonAssistiveTextElement.className = SLDS_ASSISTIVE_TEXT;
 		buttonAssistiveTextElement.id = MINIMIZED_NOTIFICATION_DISMISS_BTN_ID;
 		buttonAssistiveTextElement.innerHTML = getLabel("EmbeddedMessagingMinimizedState", "MinimizedNotificationDismissButtonAssistiveText") || MINIMIZED_NOTIFICATION_DISMISS_BTN_DEFAULT_ASSISTIVE_TEXT;
 
-		buttonElement.appendChild(buttonTextElement);
+		buttonElement.appendChild(buttonIconElement);
 		buttonElement.appendChild(buttonAssistiveTextElement);
 
 		return buttonElement;
@@ -4056,7 +4731,7 @@
 			sendPostMessageToAppIframe(EMBEDDED_MESSAGING_SET_IDENTITY_TOKEN_EVENT_NAME, identityToken);
 		} else if (!getEmbeddedMessagingConversationButton()) {
 			embeddedservice_bootstrap.generateMarkup();
-		} else if (getEmbeddedMessagingConversationButton() && document.getElementById(EMBEDDED_MESSAGING_ICON_REFRESH)) {
+		} else if (getEmbeddedMessagingConversationButton() && document.getElementById(EMBEDDED_MESSAGING_ICON_ERROR)) {
 			// Remove existing markup on the page if we're in error state before regenerating the button markup.
 			embeddedservice_bootstrap.removeMarkup();
 			embeddedservice_bootstrap.generateMarkup();
@@ -4241,7 +4916,7 @@
 		let button;
 		let chatIcon;
 		let iconContainer;
-		let refreshIcon;
+		let errorIcon;
 		let minimizedNotification;
 
 		// Handle client reset and surface error state only in the primary tab.
@@ -4270,13 +4945,18 @@
 				iconContainer.removeChild(chatIcon);
 			}
 
-			// Create the minimize button markup and insert into the DOM.
-			refreshIcon = renderSVG(DEFAULT_ICONS.REFRESH);
-			refreshIcon.setAttribute("id", EMBEDDED_MESSAGING_ICON_REFRESH);
-			refreshIcon.setAttribute("class", EMBEDDED_MESSAGING_ICON_REFRESH);
-			iconContainer.appendChild(refreshIcon);
+			// Hide the ReCaptcha Banner
+			if (isRecaptchaEnabled()) {
+				hideReCaptchaBanner();
+			}
 
-			minimizedNotification = createMinimizedNotifaction();
+			// Create the minimize button markup and insert into the DOM.
+			errorIcon = renderSVG(DEFAULT_ICONS.ERROR);
+			errorIcon.setAttribute("id", EMBEDDED_MESSAGING_ICON_ERROR);
+			errorIcon.setAttribute("class", EMBEDDED_MESSAGING_ICON_ERROR);
+			iconContainer.appendChild(errorIcon);
+
+			minimizedNotification = createMinimizedNotification(getLabel("EmbeddedMessagingMinimizedState", "JWTRetrievalFailureText") || MINIMIZED_NOTIFICATION_AREA_DEFAULT_TEXT);
 
 			button.disabled = true;
 
@@ -4815,6 +5495,12 @@
 			const conversationButton = getEmbeddedMessagingConversationButton();
 			if (conversationButton) {
 				conversationButton.style.display = "block";
+
+				// If invitations is enabled, evaluatue if invitation should be shown along with button.
+				if (hasInvitationsEnabled()) {
+					embeddedservice_bootstrap.invitations.evaluate();
+				}
+
 				return true;
 			} else if (isChannelMenuDeployment()) {
 				emitEmbeddedMessagingChannelMenuVisibilityChangeEvent(true);
@@ -5062,6 +5748,37 @@
 	}
 
 	/*********************************************************
+	 *		    Invitation API         *
+	 **********************************************************/
+
+	/**
+	 * Invitation API methods exposed in window.embeddedservice_bootstrap.invitationsAPI
+	 * for setting/updating/removing custom variables for invitations from the host domain.
+	 * @class
+	 */
+	function EmbeddedMessagingInvitation() {}
+
+	/**
+	 * EXTERNAL API - DO NOT CHANGE SHAPE!
+	 * 
+	 * Sets a new custom variable or updates an existing variable with the passed in value.
+     * @param {object} customVariables - an object (in the form of a Map) of key-value pairs (e.g. { CustomVariableName1 : CustomVariableValue1, CustomVariableName2 : CustomVariableValue2 }) of custom variables as set by the host.
+	 */
+	EmbeddedMessagingInvitation.prototype.setCustomVariables = function setCustomVariables(customVariables) {
+		embeddedservice_bootstrap.invitations.setCustomVariable(customVariables);
+	}
+
+	/**
+	 * EXTERNAL API - DO NOT CHANGE SHAPE!
+	 * 
+	 * Removes an existing custom variable with the passed in key name.
+	 * @param {object} customVariables - an object (in the form of an Array) of custom variable names (e.g. [ CustomVariableName1, CustomVariableName2 ]) to be removed/deleted.
+	 */
+	EmbeddedMessagingInvitation.prototype.removeCustomVariables = function removeCustomVariables(customVariables) {
+		embeddedservice_bootstrap.invitations.removeCustomVariables(customVariables);
+	}
+
+	/*********************************************************
 	 *		    Embedded Messaging Bootstrap Object          *
 	 **********************************************************/
 	/**
@@ -5087,8 +5804,17 @@
 			MINIMIZE_MODAL: {
 				value: "M47.6,17.8L27.1,38.5c-0.6,0.6-1.6,0.6-2.2,0L4.4,17.8c-0.6-0.6-0.6-1.6,0-2.2l2.2-2.2 c0.6-0.6,1.6-0.6,2.2,0l16.1,16.3c0.6,0.6,1.6,0.6,2.2,0l16.1-16.2c0.6-0.6,1.6-0.6,2.2,0l2.2,2.2C48.1,16.3,48.1,17.2,47.6,17.8z"
 			},
-			REFRESH: {
-				value: "M46.5,4h-3C42.7,4,42,4.7,42,5.5v7c0,0.9-0.5,1.3-1.2,0.7l0,0c-0.3-0.4-0.6-0.7-1-1c-5-5-12-7.1-19.2-5.7 c-2.5,0.5-4.9,1.5-7,2.9c-6.1,4-9.6,10.5-9.7,17.5c-0.1,5.4,2,10.8,5.8,14.7c4,4.2,9.4,6.5,15.2,6.5c5.1,0,9.9-1.8,13.7-5 c0.7-0.6,0.7-1.6,0.1-2.2l-2.1-2.1c-0.5-0.5-1.4-0.6-2-0.1c-3.6,3-8.5,4.2-13.4,3c-1.3-0.3-2.6-0.9-3.8-1.6 C11.7,36.6,9,30,10.6,23.4c0.3-1.3,0.9-2.6,1.6-3.8C15,14.7,19.9,12,25.1,12c4,0,7.8,1.6,10.6,4.4c0.5,0.4,0.9,0.9,1.2,1.4 c0.3,0.8-0.4,1.2-1.3,1.2h-7c-0.8,0-1.5,0.7-1.5,1.5v3.1c0,0.8,0.6,1.4,1.4,1.4h18.3c0.7,0,1.3-0.6,1.3-1.3V5.5 C48,4.7,47.3,4,46.5,4z"
+			DISMISS: {
+				value: "M75.129 24.871a6.25 6.25 0 010 8.839L58.839 50l16.29 16.29a6.25 6.25 0 01-8.839 8.839L50 58.839 33.71 75.129a6.25 6.25 0 01-8.839-8.839L41.161 50 24.871 33.71a6.25 6.25 0 018.839-8.839L50 41.161l16.29-16.29a6.25 6.25 0 018.839 0z"
+			},
+			ERROR: {
+				value: "M15.9997 1.23096C7.87662 1.23096 1.23047 7.87711 1.23047 16.0002C1.23047 24.1233 7.87662 30.7694 15.9997 30.7694C24.1228 30.7694 30.7689 24.1233 30.7689 16.0002C30.7689 7.87711 24.1228 1.23096 15.9997 1.23096ZM4.92282 16.0001C4.92282 9.90783 9.90744 4.92321 15.9997 4.92321C18.3997 4.92321 20.6151 5.66167 22.3997 6.95398L6.95359 22.4001C5.66128 20.6155 4.92282 18.4001 4.92282 16.0001V16.0001ZM15.9995 27.0772C13.5995 27.0772 11.3841 26.3387 9.59946 25.0464L25.0456 9.60024C26.3379 11.3849 27.0764 13.6002 27.0764 16.0002C27.0764 22.0926 22.0918 27.0772 15.9995 27.0772Z"
+			},
+			INNER_ARC: {
+				value: "M35.526 48.684A35.526 35.526 0 0 0 0 13.158V0a48.684 48.684 0 0 1 0 97.368V84.211a35.526 35.526 0 0 0 35.526-35.527Z"
+			},
+			OUTER_ARC: {
+				value: "M50 8.333C26.987 8.333 8.333 26.987 8.333 50S26.987 91.667 50 91.667V100C22.387 100 0 77.613 0 50S22.387 0 50 0s50 22.387 50 50h-8.333C91.667 26.987 73.013 8.333 50 8.333Z"
 			}
 		});
 
@@ -5163,6 +5889,19 @@
 	};
 
 	/**
+	 * Determines if a message origin url is from configured domain. Used for filtering messages.
+	 *
+	 * @param {string} messageOriginUrl - String containing the origin url. This should end with the domain (strip off the port before passing to this function).
+	 * @return {boolean} Did message come from page specified in snippet setting?
+	 */
+	EmbeddedServiceBootstrap.prototype.isMessageFromCustomDomain = function isMessageFromCustomDomain(messageOriginUrl) {
+		var messageOrigin = messageOriginUrl.split(":")[1].replace("//", "");
+
+		return typeof embeddedservice_bootstrap.settings.customDomain === "string"
+			&& messageOrigin === embeddedservice_bootstrap.settings.customDomain;
+	};
+
+	/**
 	 * Generate markup and render static conversation button on parent page.
 	 * @param {boolean} generateMarkupInChannelMenu - Whether or not method is invoked by #bootstrapEmbeddedMessaging() API
 	 */
@@ -5170,6 +5909,10 @@
 		const markupFragment = document.createDocumentFragment();
 		let topContainerElement = getEmbeddedMessagingTopContainer();
 		let conversationButtonElement = getEmbeddedMessagingConversationButton();
+
+		if (isRecaptchaEnabled()) {
+			showReCaptchaBanner();
+		}
 
 		if (isChannelMenuDeployment() && !generateMarkupInChannelMenu) {
 			emitEmbeddedMessagingChannelMenuVisibilityChangeEvent();
@@ -5196,6 +5939,8 @@
 		if(!getInertScript()) {
 			addInertScript();
 		}
+
+		addLiveRegionAnnouncer();
 	};
 
 	/**
@@ -5258,16 +6003,22 @@
 				const iframe = document.createElement("iframe");
 				const modal = createBackgroundModalOverlay();
 
-				iframe.title = getLabel("EmbeddedMessagingIframesAndContents", "MessagingIframeTitle") || IFRAME_DEFAULT_TITLE;
 				iframe.className = LWR_IFRAME_NAME;
 				iframe.id = LWR_IFRAME_NAME;
 				iframe.onload = resolve;
 				iframe.onerror = reject;
 				iframe.style.backgroundColor = "transparent";
+
+				// Apply custom iframe allow list from snippet setting
+				if (typeof embeddedservice_bootstrap.settings.iframeAllow === "string") {
+					iframe.allow = embeddedservice_bootstrap.settings.iframeAllow;
+				}
+
 				iframe.allowTransparency = "true";
 				iframe.setAttribute("aria-label", getLabel("EmbeddedMessagingChatHeader", "ChatWindowAssistiveText") || CHAT_WINDOW_ASSISTIVE_TEXT);
 				iframe.setAttribute("role", "dialog");
 				iframe.setAttribute("aria-modal", "true");
+				iframe.setAttribute("data-f6-region", "");
 
 				if (isAppDisplayModeInline()) {
 					iframe.classList.add(LWR_INLINE_IFRAME_CLASS);
@@ -5349,6 +6100,7 @@
 		const iconContainer = document.getElementById(EMBEDDED_MESSAGING_ICON_CONTAINER);
 		const viewportMetaTag = getViewportMetaTag();
 		const isiOS = isUseriOS();
+		const captchaBanner = document.querySelector(GRECAPTCHA_CLASS);
 		let minimizeButton;
 
 		if(frame) {
@@ -5431,6 +6183,10 @@
 			toggleInertOnSiblingElements(true);
 		}
 
+		if (captchaBanner) {
+			captchaBanner.classList.add(MODAL_ISMAXIMIZED_CLASS);
+		}
+
 		sendPostMessageToAppIframe(EMBEDDED_MESSAGING_MAXIMIZE_RESIZING_COMPLETED_EVENT_NAME);
 		log("maximizeIframe", `Maximized the app`);
 		dispatchEventToHost(ON_EMBEDDED_MESSAGING_WINDOW_MAXIMIZED_EVENT_NAME);
@@ -5443,6 +6199,7 @@
 		const modal = getEmbeddedMessagingModal();
 		const minimizeIcon = document.getElementById(EMBEDDED_MESSAGING_ICON_MINIMIZE);
 		const hasMinimizedNotification = data.hasMinimizedNotification;
+		const captchaBanner = document.querySelector(GRECAPTCHA_CLASS);
 
 		if(frame) {
 			frame.classList.remove(MODAL_ISMAXIMIZED_CLASS);
@@ -5502,6 +6259,10 @@
 			toggleInertOnSiblingElements(false);
 		}
 
+		if (captchaBanner) {
+			captchaBanner.classList.remove(MODAL_ISMAXIMIZED_CLASS);
+		}
+
 		sendPostMessageToAppIframe(EMBEDDED_MESSAGING_MINIMIZE_RESIZING_COMPLETED_EVENT_NAME);
 		log("minimizeIframe", `Minimized the app`);
 		dispatchEventToHost(ON_EMBEDDED_MESSAGING_WINDOW_MINIMIZED_EVENT_NAME);
@@ -5520,6 +6281,208 @@
 	}
 
 	/**
+	 * Hide the ReCaptcha badge once the accessToken call is completed
+	 */
+	function hideReCaptchaBanner() {
+		// Select the grecaptcha-badge element
+		let badge = document.querySelector(GRECAPTCHA_CLASS);
+
+		// Set its visibility to hidden
+		if (badge) {
+			badge.style.visibility = 'hidden';
+		}
+	}
+
+	/**
+	 * Show the ReCaptcha badge once the chat is ended and client is reset to initial state
+	 */
+	function showReCaptchaBanner() {
+		// Select the grecaptcha-badge element
+		let badge = document.querySelector(GRECAPTCHA_CLASS);
+
+		// Set its visibility to visible
+		if (badge) {
+			badge.classList.remove(MODAL_ISMAXIMIZED_CLASS);
+			if (badge.style.visibility === "hidden") {
+				badge.style.visibility = 'visible';
+			}
+		}
+	}
+
+	/**
+	 * Checks if Captcha is enabled and siteKey is received in the configResponse
+	 * @returns {boolean}
+	 */
+	function isRecaptchaEnabled() {
+		const messagingChannel = embeddedservice_bootstrap.settings.embeddedServiceConfig.messagingChannel;
+		return ( messagingChannel != null && messagingChannel.captchaInfo != null && messagingChannel.captchaInfo.siteKey );
+	}
+
+	/**
+	 * Checks if ReCaptcha scripts need to be loaded.
+	 * @returns {boolean}
+	 */
+	function shouldLoadReCaptchaScript() {
+		// Check if auth mode is not experience site auth
+		const isNotExpSiteAuth = getAuthMode() !== AUTH_MODE.EXP_SITE_AUTH;
+
+		// Check if reCAPTCHA client ID or grecaptcha is undefined
+		const isRecaptchaNotLoaded = typeof recaptchaClientId === 'undefined' || typeof grecaptcha === 'undefined';
+
+		return (isRecaptchaEnabled() && !sessionExists() && isNotExpSiteAuth && isRecaptchaNotLoaded);
+	}
+
+	/**
+	 * Load the ReCaptcha script on below conditions
+	 * 1. Page load before chat button is visible
+	 * 2. In case of page refresh in middle of chat and chat end and then
+	 *    reset client to initial state before initiating a new chat
+	 * @returns {Promise} Resolves if ReCaptcha script is loaded.
+	 */
+	function loadReCaptchaScript() {
+		return new Promise( (resolve, reject) => {
+			const messagingChannel = embeddedservice_bootstrap.settings.embeddedServiceConfig.messagingChannel;
+			const siteKey = messagingChannel.captchaInfo.siteKey;
+			const script = document.createElement('script');
+			script.src = RECAPTCHA_URL;
+
+			const recaptchaBannerDiv = document.createElement('div');
+			recaptchaBannerDiv.id = GRECAPTCHA_BANNER_DIV;
+			recaptchaBannerDiv.classList.add(GRECAPTCHA_BANNER_CLASS);
+			let badgeDirection = "bottomright";
+			// Set HTML direction based on language
+			badgeDirection = (embeddedservice_bootstrap.settings.embeddedServiceConfig.htmlDirection
+				&& typeof embeddedservice_bootstrap.settings.embeddedServiceConfig.htmlDirection === "string"
+				&& embeddedservice_bootstrap.settings.embeddedServiceConfig.htmlDirection.toLowerCase() === "rtl")
+				? "bottomleft"
+				: badgeDirection;
+
+			embeddedservice_bootstrap.settings.targetElement.appendChild(recaptchaBannerDiv);
+
+			script.onload = function () {
+				grecaptcha.ready(function () {
+					recaptchaClientId = grecaptcha.render(GRECAPTCHA_BANNER_DIV, {
+						'sitekey': siteKey,
+						'size': 'invisible',
+						'badge': badgeDirection
+					});
+					resolve('ReCaptcha script loaded');
+				});
+			};
+
+			script.onerror = function (err) {
+				const errorMessage = err?.message || err;
+				warning("loadReCaptchaScript", errorMessage);
+				reject(errorMessage);
+			};
+
+			// Append the script to the head of the document
+			embeddedservice_bootstrap.settings.targetElement.appendChild(script);
+		});
+	}
+
+	/**
+	 * Executes the Invisible ReCaptcha script to generate the client token, required for server validation
+	 * @returns {Promise} Resolves if Captcha is not enabled or ReCaptcha token is successfully generated.
+	 */
+	function handleReCaptchaTokenGeneration() {
+		// Trigger the invisible ReCaptcha when requesting for new Access Token
+		return new Promise((resolve, reject) => {
+			try {
+				// Execute the ReCaptcha script to generate token
+				grecaptcha.ready(function () {
+					grecaptcha.execute(recaptchaClientId, {action: 'AccessTokenRequest'}).then(function (token) {
+						resolve(token);
+					}).catch(function (err) {
+						// If execute fails, reject the promise
+						const errorMessage = err?.message || err;
+						log("handleReCaptchaTokenGeneration", errorMessage);
+						reject(errorMessage);
+					});
+				});
+			} catch (err) {
+				const errorMessage = err?.message || err;
+				warning("handleReCaptchaTokenGeneration", errorMessage);
+				reject(errorMessage);
+			}
+		});
+	}
+
+	/**
+	 * Return true if Agent Availability feature is enabled in setup and hideChatButtonOnLoad is set to false
+	 * @returns {boolean}
+	 */
+	function isAgentAvailabilityCheckEnabled() {
+		const messagingChannel = embeddedservice_bootstrap.settings.embeddedServiceConfig.messagingChannel;
+		return (!Boolean(embeddedservice_bootstrap.settings.hideChatButtonOnLoad) && messagingChannel != null && Boolean(messagingChannel.isAgentAvailabilityCheckEnabled));
+	}
+
+	/**
+	 * Gets agent availability data and checks if agent is available and stores it in web storage for future reference.
+	 * @returns {Promise} Resolves if agent availability api returns true
+	 */
+	function getAgentAvailability() {
+		return new Promise((resolve, reject) => {
+			const checkAvailability = () => {
+				getAgentAvailabilityData()
+					.then((agentAvailable) => {
+						log("getAgentAvailability", `Received getAgentAvailability API response: ${agentAvailable}`);
+						if (agentAvailable === true) {
+							clearAgentAvailabilityTimer()
+							setupAgentAvailabilityTimer();
+							// Resolve the promise if agent is available
+							resolve(true);
+						} else {
+							// Retry after 30 seconds
+							setTimeout(checkAvailability, AGENT_AVAILABILITY_TIMEOUT_MS);
+						}
+					})
+					.catch((error) => {
+						error("getAgentAvailability",`getAgentAvailability API call failed, retrying in ${AGENT_AVAILABILITY_TIMEOUT_MS} milliseconds: ${error}`);
+						// Retry after 30 seconds on error
+						setTimeout(checkAvailability, AGENT_AVAILABILITY_TIMEOUT_MS);
+					});
+			};
+
+			// Initial call
+			checkAvailability();
+		});
+	}
+
+	/**
+	 * Set an agent availability timer that invokes a callback at every 30 seconds interval,
+	 * and makes call to agent availability API and shows/hides the button according to the response received..
+	 */
+	function setupAgentAvailabilityTimer() {
+		agentAvailabilityTimer = setInterval(() => {
+			getAgentAvailabilityData()
+				.then((agentAvailable) => {
+					log("setupAgentAvailabilityTimer", `Received getAgentAvailability API response: ${agentAvailable}`);
+					if (agentAvailable === true) {
+						if (isWithinBusinessHours() && (getAuthMode() === AUTH_MODE.UNAUTH || (getAuthMode() === AUTH_MODE.EXP_SITE_AUTH && !embeddedservice_bootstrap.settings.snippetConfig.isExpSiteGuestUser))) {
+							embeddedservice_bootstrap.utilAPI.showChatButton();
+						}
+					} else {
+						embeddedservice_bootstrap.utilAPI.hideChatButton();
+					}
+				})
+				.catch((error) => {
+					error("setupAgentAvailabilityTimer",`getAgentAvailability API call failed, hiding chat button and retrying in ${AGENT_AVAILABILITY_TIMEOUT_MS} milliseconds: ${error}`);
+					// Hide Chat Button
+					embeddedservice_bootstrap.utilAPI.hideChatButton();
+				});
+		}, AGENT_AVAILABILITY_TIMEOUT_MS);
+	}
+
+	/**
+	 * Clears the agent availability timer and sets it to undefined to stop the agent availability API calls at every 30 seconds interval.
+	 */
+	function clearAgentAvailabilityTimer() {
+		clearInterval(agentAvailabilityTimer);
+		agentAvailabilityTimer = undefined;
+	}
+
+	/**
 	 * Initialize feature specific objects on the global bootstrap object 'embeddedservice_bootstrap' to expose certain feature related APIs/properties externally.
 	 */
 	EmbeddedServiceBootstrap.prototype.initializeFeatureObjects = function initializeFeatureObjects() {
@@ -5534,6 +6497,9 @@
 
 		// Initialize util API
 		embeddedservice_bootstrap.utilAPI = new EmbeddedMessagingUtil();
+
+		// Initialize invitation API
+		embeddedservice_bootstrap.invitationAPI = new EmbeddedMessagingInvitation();
 	}
 
 	/**
@@ -5590,12 +6556,15 @@
 			// Whether to minimize the chat window when continuing an existing session in a new tab.
 			embeddedservice_bootstrap.settings.shouldMinimizeWindowOnNewTab = Boolean(embeddedservice_bootstrap.settings.shouldMinimizeWindowOnNewTab);
 
+			// Whether to disable launching chat immediately on init in inline display mode.
+			embeddedservice_bootstrap.settings.disableLaunchChatOnInit = Boolean(embeddedservice_bootstrap.settings.disableLaunchChatOnInit);
+
 			// Load CSS file for bootstrap.js from GSLB.
 			const cssPromise = loadCSS().then(
 				Promise.resolve.bind(Promise),
 				() => {
 					// Retry loading CSS file from Core, if failed to load from GSLB.
-					return loadCSS(getSiteURL());
+					return loadCSS("https://esw1234.github.io/godwin");
 				}
 			).catch(
 				() => {
@@ -5624,7 +6593,14 @@
 					if (isExpSite()) {
 						log("init", `Messaging for Web used in ${embeddedservice_bootstrap.settings.snippetConfig.expSiteContext} Experience Site context.`);
 						if (embeddedservice_bootstrap.settings.expSiteAuthMode) {
-							embeddedservice_bootstrap.settings.embeddedServiceConfig.embeddedServiceMessagingChannel.authMode = AUTH_MODE.EXP_SITE_AUTH;
+							// Auth mode must also be enabled on channel level for session-based auth for exp site.
+							// Otherwise proceed as unauth.
+							if (isUserVerificationEnabled()) {
+								embeddedservice_bootstrap.settings.embeddedServiceConfig.embeddedServiceMessagingChannel.authMode = AUTH_MODE.EXP_SITE_AUTH;
+							} else {
+								error("init", "User verification is not enabled in messaging channel.");
+								throw new Error("User verification is not enabled in messaging channel.");
+							}
 						}
 					} else {
 						log("init", "Messaging for Web used in External Site context.");
@@ -5647,6 +6623,15 @@
 					throw new Error("Unable to load Embedded Messaging configuration.");
 				}
 			);
+
+			let loadReCaptchaPromise = configPromise.then(() => {
+				if (shouldLoadReCaptchaScript()) {
+					return loadReCaptchaScript();
+				} else {
+					// If ReCaptcha is not enabled or session exists or , resolve immediately
+					return Promise.resolve('ReCaptcha is not enabled or session exists');
+				}
+			});
 
 			//once we have config we can check 3rd party storage
 			configPromise.then(() => {
@@ -5671,8 +6656,13 @@
 					throw new Error("Failed to retrieve Business Hours data.");
 				});
 
+			const agentAvailabilityPromise = Promise.all([configPromise, businessHoursPromise, sessionDataPromise]).then(() => {
+				return (!isAgentAvailabilityCheckEnabled() || !isWithinBusinessHours() || sessionExists())
+					? Promise.resolve(true)
+					: getAgentAvailability();
+			});
 			// Show button when we've loaded everything.
-			Promise.all([cssPromise, configPromise, businessHoursPromise, sessionDataPromise]).then(() => {
+			Promise.all([cssPromise, configPromise, businessHoursPromise, sessionDataPromise, loadReCaptchaPromise, agentAvailabilityPromise]).then(() => {
 				initializeWebStorage();
 
 				logWebStorageItemsOnInit();
@@ -5681,20 +6671,26 @@
 
 				embeddedservice_bootstrap.emitEmbeddedMessagingReadyEvent();
 
-				// For experience site auth mode, markup is generated if user is logged in.
 				// If session exists in web storage, generate button markup and bootstrap the session.
 				// Else, generate button markup only for unauth mode. For external site auth mode, markup is generated in #setIdentityToken() API.
+				// For experience site auth mode, markup is generated if user is logged in.
 				// For MIAW in Channel Menu, static button markup is generated on menu item click in #bootstrapEmbeddedMessaging() API
-				if (getAuthMode() === AUTH_MODE.EXP_SITE_AUTH) {
-					getExpSiteSessionTimeout();
-				} else if (sessionExists()) {
+				if (sessionExists()) {
 					handleExistingSession();
-				} else if (getAuthMode() === AUTH_MODE.UNAUTH) {
+				} else if (getAuthMode() === AUTH_MODE.UNAUTH || (getAuthMode() === AUTH_MODE.EXP_SITE_AUTH && !embeddedservice_bootstrap.settings.snippetConfig.isExpSiteGuestUser)) {
+					if (getAuthMode() === AUTH_MODE.EXP_SITE_AUTH) {
+						getExpSiteSessionTimeout();
+					}
 					embeddedservice_bootstrap.generateMarkup();
 				}
 
+				// Initialize invitations if enabled
+				if (!sessionExists() && !isChannelMenuDeployment() && hasInvitationsEnabled()) {
+					initializeInvitations(Date.now());
+				}
+
 				// Launch chat immediately on init in inline display mode.
-				if (isAppDisplayModeInline()) {
+				if (isAppDisplayModeInline() && !embeddedservice_bootstrap.settings.disableLaunchChatOnInit) {
 					embeddedservice_bootstrap.utilAPI.launchChat();
 				}
 			});

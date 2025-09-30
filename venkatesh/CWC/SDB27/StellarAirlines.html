@@ -1,0 +1,252 @@
+<html>
+<head>
+  <title> CWC Airlines - Book Flights</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <style>
+    body {
+      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f6f9;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(90deg, #011f4b, #03396c);
+      color: #fff;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    }
+    header h1 {
+      font-size: 22px;
+      font-weight: bold;
+      margin: 0;
+      letter-spacing: 1px;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 25px;
+      font-size: 15px;
+      transition: opacity 0.2s;
+    }
+    nav a:hover {
+      opacity: 0.7;
+    }
+    .hero {
+      background: url("https://dummyimage.com/1600x500/011f4b/ffffff&text=Fly+with+CWC+Airlines") no-repeat center center;
+      background-size: cover;
+      color: #fff;
+      padding: 120px 30px;
+      text-align: center;
+    }
+    .hero h2 {
+      font-size: 38px;
+      margin: 0 0 15px;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+    }
+    .hero p {
+      font-size: 18px;
+      margin: 0;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+    }
+    .booking-box {
+      background: #fff;
+      padding: 30px;
+      margin: -60px auto 40px;
+      width: 85%;
+      max-width: 900px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+    .booking-box h2 {
+      margin-bottom: 20px;
+      font-size: 22px;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+    }
+    .form-row {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .form-row input, .form-row select {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 14px 30px;
+      background: #011f4b;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 15px;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #03396c;
+    }
+    .sections {
+      width: 85%;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+    .card-content {
+      padding: 20px;
+    }
+    .card-content h3 {
+      margin-top: 0;
+      font-size: 18px;
+    }
+    .card-content p {
+      font-size: 14px;
+      color: #555;
+    }
+    footer {
+      background: #011f4b;
+      color: #fff;
+      padding: 25px;
+      text-align: center;
+      font-size: 13px;
+      margin-top: 50px;
+    }
+    p.debug-info {
+      margin: 20px;
+      font-size: 12px;
+      color: #444;
+      background: #eef1f5;
+      padding: 10px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CWC Airlines</h1>
+    <nav>
+      <a href="#">Book a Flight</a>
+      <a href="#">Manage Booking</a>
+      <a href="#">Check-in</a>
+      <a href="#">Flight Status</a>
+      <a href="#">Deals</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <h2>Fly Beyond Expectations</h2>
+    <p>Experience comfort, luxury, and convenience with CWC Airlines</p>
+  </div>
+
+  <div class="booking-box">
+    <h2>Book Your Flight</h2>
+    <form>
+      <div class="form-row">
+        <input type="text" placeholder="From">
+        <input type="text" placeholder="To">
+      </div>
+      <div class="form-row">
+        <input type="date" placeholder="Departure Date">
+        <input type="date" placeholder="Return Date">
+      </div>
+      <div class="form-row">
+        <select>
+          <option>1 Adult</option>
+          <option>2 Adults</option>
+          <option>3 Adults</option>
+        </select>
+        <select>
+          <option>Economy</option>
+          <option>Business</option>
+          <option>First Class</option>
+        </select>
+      </div>
+      <a href="#" class="btn">Search Flights</a>
+    </form>
+  </div>
+
+  <section class="sections">
+    <div class="card">
+      <img src="https://dummyimage.com/600x400/036/fff&text=Singapore+Special" alt="Promo">
+      <div class="card-content">
+        <h3>Special Fares to Singapore</h3>
+        <p>Enjoy exclusive fares to Singapore this season. Limited time only!</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="https://dummyimage.com/600x400/039/fff&text=Luxury+Upgrade" alt="Upgrade">
+      <div class="card-content">
+        <h3>Upgrade to Business Class</h3>
+        <p>Fly with extra comfort and style with our special upgrade offers.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="https://dummyimage.com/600x400/093/fff&text=Family+Getaway" alt="Family">
+      <div class="card-content">
+        <h3>Family Getaway Packages</h3>
+        <p>Book flights and resorts together and save more for your family trips.</p>
+      </div>
+    </div>
+  </section>
+
+  <p class="debug-info">
+    Debug Info (from original code):  
+    SDB27 CWCChannelwASA3 cwcuser3@test.com / test1234
+  </p>
+
+  <p><a id="editThisPageLink" target="_blank" style="color:blue">Edit this page</a></p>
+
+  <script>
+    document.getElementById('editThisPageLink').href =
+      "https://github.com/ESW1234/esw1234.github.io/edit/master" + window.location.pathname;
+  </script>
+
+  <!-- <script type='text/javascript' src='https://service.force.com/asyncclient/bootstrap.js'></script> -->
+  <script type='text/javascript'>
+    function initEmbeddedMessaging() {
+      try {
+        agentforce_messaging.settings.language = 'en_US';
+        agentforce_messaging.settings.devMode = true;
+        agentforce_messaging.init(
+          '00DLT000008rciV',
+          'CWCChannelwASA3',
+          'https://orgfarm-e47cee3d5f.demo.test1.my.pc-rnd.site.com/ESWCWCChannelwASA31758191132586',
+          {
+            scrt2URL: 'https://orgfarm-e47cee3d5f.demo.test1.my.pc-rnd.salesforce-scrt.com'
+          }
+        );
+      } catch (err) {
+        console.error('Error loading Embedded Messaging: ', err);
+      }
+    };
+  </script>
+  <script type='text/javascript' src='https://orgfarm-e47cee3d5f.demo.test1.my.pc-rnd.site.com/ESWCWCChannelwASA31758191132586/assets/js/init.js' onload='initEmbeddedMessaging()'></script>
+
+  <footer>
+    &copy; 2025 CWC Airlines (Dummy Site for Testing)
+  </footer>
+</body>
+</html>

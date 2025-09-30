@@ -6,15 +6,19 @@
 
 <script type="text/javascript" 
 	id="init-agentforce-messaging" 
-	src="https://orgfarm-b48de4168d.my.salesforce-com.ge8b6pjbl2b302opq8yix.wa.crm.dev:6101/embeddedservice/agentforcemessaging/0.3/init.js" 
+	src="https://orgfarm-48e00a03ba.my.site-com.gun55chkvsr815a0en9fj41g10j4.wc.crm.dev:6101/AFMNGC11751059862116vforcesite/embeddedservice/agentforcemessaging/0.3/init.js" 
 	onload='agentforce_messaging.init({
 		devMode: true,
-		siteUrl: "https://orgfarm-b48de4168d.my.site-com.ge8b6pjbl2b302opq8yix.wa.crm.dev:6101/NGC1",
+		siteUrl: "https://orgfarm-48e00a03ba.my.site-com.gun55chkvsr815a0en9fj41g10j4.wc.crm.dev:6101/AFMNGC11751059862116",
 		agentApiConfiguration: {
-			agentId: "0XxSB000000Y4cH0AS",
+			enableSurfaces: true,
+			agentId: "0XxSB000000YYgn0AG",
 			domainUrl: "https://orgfarm-0c5a291cea.test1.my.pc-rnd.salesforce.com",
-			endpoint: "https://test.api.salesforce.com/einstein/ai-agent/v1/agents/{AGENT_ID}/sessions",
-			voiceEndpoint: "https://test.api.salesforce.com/einstein/ai-agent/v1.1/realtime/sessions/{SESSION_ID}/join"
+			endpoint: "https://test.api.salesforce.com/einstein/ai-agent/v1.1/agents/{AGENT_ID}/sessions",
+			voiceEndpoint: "https://test.api.salesforce.com/einstein/ai-agent/v1.1/realtime/sessions/{SESSION_ID}/join",
+			apiKey: "7c3c0415-dab7-4037-86db-5dc35bb48069",
+			tenantId: "core/falcontest1-core4sdb3/00DSB00000QAo9R2AT",
+			region: "us-west-2"
 		},
 		uiConfiguration: {}
 	});'>
