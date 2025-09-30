@@ -8,9 +8,10 @@
     <pre id="responseBox">Loading...</pre>
 
     <script>
+      const proxy= "https://cors-anywhere.herokuapp.com/";
       const url = "https://sachinsdb6.test1.my.pc-rnd.salesforce.com/miaw/auth/accesstoken?platformType=Web&developerName=WebAuth1&capabilitiesVersion=248";
 
-      fetch(url)
+      fetch(proxy + url)
         .then(response => {
           if (!response.ok) {
             throw new Error("HTTP error " + response.status);
