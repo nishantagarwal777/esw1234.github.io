@@ -15,6 +15,7 @@
     xhr.setRequestHeader('X-Custom-Header', 'MyCustomValue');
     xhr.setRequestHeader('X-Force-Preflight', 'true'); // non-simple header
     xhr.setRequestHeader('Content-Type', 'application/json'); // also non-simple for GET
+    xhr.setRequestHeader('Cookie', 'CookieConsentPolicy=0:1; LSKey-c$CookieConsentPolicy=0:1; oid=00Dxx00HMDiFf44; oinfo=c3RhdHVzPVRSSUFMJnR5cGU9MiZvaWQ9MDBEeHgwMEhNRGlGZjQ0; pctrk=96bd2392-bf13-4126-b4b7-1c638121dde0; sid_Client=x000001X7mvx00HMDiFf44; clientSrc=10.97.202.2; __Secure-has-sid=0DMxx0000004C93GAE,0DMxx0000004CCHGA2,0DMxx0000004CDtGAM,0DMxx0000004CAfGAM; sid=00Dxx00HMDiFf44!AQEAQOYWoSk2mCK73W09QjtFeFs_jIjDtGa0X3opCMtmflCg5POhgNeDBmVBPGWT0E_Wfs2JMO8CrIjeSr1rf5i4y88lU64N'); // also non-simple for GET
     xhr.onload = function () {
       if (xhr.status >= 200 && xhr.status < 300) {
         console.log('Response:', xhr.responseText);
