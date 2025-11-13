@@ -13,7 +13,8 @@
 
     // Add a custom header
     xhr.setRequestHeader('X-Custom-Header', 'MyCustomValue');
-
+    xhr.setRequestHeader('X-Force-Preflight', 'true'); // non-simple header
+    xhr.setRequestHeader('Content-Type', 'application/json'); // also non-simple for GET
     xhr.onload = function () {
       if (xhr.status >= 200 && xhr.status < 300) {
         console.log('Response:', xhr.responseText);
