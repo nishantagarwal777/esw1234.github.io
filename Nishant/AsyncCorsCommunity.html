@@ -1,0 +1,36 @@
+<html>
+  <script>
+    var xhr = new XMLHttpRequest();
+
+    // Enable cookies (credentials) to be sent with the request
+    xhr.withCredentials = true;
+
+    xhr.open(
+      'GET',
+      'https://orgfarm-34128e5490.my.site-com.fq2o4o752cz81jalai38eo.wc.crm.dev:6101/NishantCommunity/miaw/auth/accesstoken?platformType=Web&developerName=MiawWebAuth&capabilitiesVersion=258',
+      true
+    );
+
+    // Add a custom header
+    xhr.setRequestHeader('Content-Type', 'application/json'); // also non-simple for GET
+    xhr.onload = function () {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        console.log('Response:', xhr.responseText);
+      } else {
+        console.error('Request failed with status:', xhr.status);
+      }
+    };
+
+    xhr.onreadystatechange = function () {
+      if (this.readyState === 4) {
+        console.log('Ready state 4 reached');
+      }
+    };
+
+    xhr.send(null);
+  </script>
+
+  <body>
+    Hello There!
+  </body>
+</html>
