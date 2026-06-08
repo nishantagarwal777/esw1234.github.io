@@ -1,0 +1,637 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CWC Airlines - Book Flights, Hotels & Holidays</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f6f8fb;
+      color: #1a2236;
+      line-height: 1.6;
+    }
+
+    /* Top utility bar */
+    .topbar {
+      background: #001a3a;
+      color: #c8d4e6;
+      font-size: 13px;
+      padding: 8px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .topbar a { color: #c8d4e6; text-decoration: none; margin-left: 20px; }
+    .topbar a:hover { color: #fff; }
+
+    /* Header */
+    header {
+      background: #fff;
+      padding: 18px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 22px;
+      font-weight: 800;
+      color: #011f4b;
+      letter-spacing: 0.5px;
+    }
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0070f3, #011f4b);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 18px;
+    }
+    nav a {
+      color: #1a2236;
+      text-decoration: none;
+      margin-left: 28px;
+      font-size: 15px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: #0070f3; }
+    .nav-cta {
+      margin-left: 28px;
+      padding: 9px 18px;
+      background: #011f4b;
+      color: #fff !important;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+    .nav-cta:hover { background: #0070f3; color: #fff !important; }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      background:
+        linear-gradient(135deg, rgba(1,31,75,0.85), rgba(0,112,243,0.65)),
+        url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1600&q=80") center/cover no-repeat;
+      color: #fff;
+      padding: 110px 30px 180px;
+      text-align: center;
+    }
+    .hero h2 {
+      font-size: 48px;
+      font-weight: 800;
+      margin: 0 0 16px;
+      letter-spacing: -0.5px;
+    }
+    .hero p {
+      font-size: 19px;
+      margin: 0 auto;
+      max-width: 620px;
+      opacity: 0.95;
+    }
+
+    /* Booking */
+    .booking-box {
+      background: #fff;
+      padding: 30px;
+      margin: -100px auto 60px;
+      width: 90%;
+      max-width: 1080px;
+      border-radius: 16px;
+      box-shadow: 0 18px 50px rgba(1,31,75,0.18);
+      position: relative;
+      z-index: 5;
+    }
+    .trip-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid #eef1f5;
+      padding-bottom: 14px;
+    }
+    .trip-tab {
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #5a6478;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+    .trip-tab.active {
+      background: #eaf2ff;
+      color: #0070f3;
+      border-color: #cfe1fb;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1.2fr 1fr 1fr 0.8fr 0.8fr auto;
+      gap: 12px;
+      align-items: end;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .field label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #5a6478;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    .field input, .field select {
+      padding: 12px 14px;
+      border: 1px solid #d8dee8;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      background: #fafbfd;
+      transition: border 0.2s, background 0.2s;
+    }
+    .field input:focus, .field select:focus {
+      outline: none;
+      border-color: #0070f3;
+      background: #fff;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 26px;
+      background: linear-gradient(135deg, #0070f3, #011f4b);
+      color: #fff;
+      text-decoration: none;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      white-space: nowrap;
+    }
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(0,112,243,0.35);
+    }
+
+    /* Section heading */
+    .section-head {
+      width: 90%;
+      max-width: 1180px;
+      margin: 0 auto 24px;
+      text-align: center;
+    }
+    .section-head .eyebrow {
+      color: #0070f3;
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .section-head h2 {
+      font-size: 32px;
+      margin: 6px 0 8px;
+      color: #011f4b;
+      font-weight: 800;
+    }
+    .section-head p {
+      color: #5a6478;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    /* Destination cards */
+    .sections {
+      width: 90%;
+      max-width: 1180px;
+      margin: 0 auto 70px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 18px rgba(1,31,75,0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 30px rgba(1,31,75,0.15);
+    }
+    .card-img {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+    }
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+    .card:hover .card-img img { transform: scale(1.06); }
+    .badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: #fff;
+      color: #011f4b;
+      padding: 5px 11px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .card-content { padding: 20px 22px 22px; }
+    .card-content h3 {
+      margin: 0 0 6px;
+      font-size: 18px;
+      color: #011f4b;
+    }
+    .card-content p {
+      font-size: 14px;
+      color: #5a6478;
+      margin: 0 0 14px;
+    }
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #eef1f5;
+      padding-top: 12px;
+    }
+    .price { font-weight: 800; color: #0070f3; font-size: 18px; }
+    .price small { color: #99a2b4; font-weight: 500; font-size: 12px; }
+    .card-link { color: #011f4b; text-decoration: none; font-weight: 600; font-size: 14px; }
+
+    /* Features */
+    .features {
+      background: #fff;
+      padding: 70px 0;
+      border-top: 1px solid #eef1f5;
+      border-bottom: 1px solid #eef1f5;
+    }
+    .features-grid {
+      width: 90%;
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+    }
+    .feature {
+      text-align: center;
+      padding: 20px;
+    }
+    .feature .icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #eaf2ff;
+      color: #0070f3;
+      font-size: 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .feature h4 {
+      margin: 0 0 8px;
+      font-size: 17px;
+      color: #011f4b;
+    }
+    .feature p {
+      margin: 0;
+      color: #5a6478;
+      font-size: 14px;
+    }
+
+    /* CTA banner */
+    .cta-banner {
+      background: linear-gradient(135deg, #011f4b, #0070f3);
+      color: #fff;
+      padding: 60px 30px;
+      text-align: center;
+      margin: 70px auto;
+      width: 90%;
+      max-width: 1180px;
+      border-radius: 18px;
+    }
+    .cta-banner h2 { font-size: 30px; margin: 0 0 10px; }
+    .cta-banner p { margin: 0 0 22px; opacity: 0.9; }
+    .cta-banner .btn {
+      background: #fff;
+      color: #011f4b;
+    }
+    .cta-banner .btn:hover { background: #eaf2ff; }
+
+    /* Footer */
+    footer {
+      background: #011f4b;
+      color: #c8d4e6;
+      padding: 50px 40px 20px;
+      margin-top: 0;
+    }
+    .footer-grid {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #1a3866;
+    }
+    .footer-grid h4 {
+      color: #fff;
+      font-size: 15px;
+      margin: 0 0 14px;
+    }
+    .footer-grid a {
+      display: block;
+      color: #c8d4e6;
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .footer-grid a:hover { color: #fff; }
+    .footer-bottom {
+      max-width: 1180px;
+      margin: 20px auto 0;
+      text-align: center;
+      font-size: 13px;
+      color: #8ea0bd;
+    }
+
+    @media (max-width: 900px) {
+      .form-grid { grid-template-columns: 1fr 1fr; }
+      .form-grid .btn { grid-column: 1 / -1; }
+      .hero h2 { font-size: 34px; }
+      nav { display: none; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .topbar { padding: 8px 20px; }
+      header { padding: 14px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <span>Need help? Call +1 (800) 555-0199 — 24/7 Customer Care</span>
+    <div>
+      <a href="#">Help Center</a>
+      <a href="#">Sign In</a>
+      <a href="#">Register</a>
+    </div>
+  </div>
+
+  <header>
+    <div class="logo">
+      <span class="logo-mark">&#9992;</span>
+      CWC Airlines
+    </div>
+    <nav>
+      <a href="#">Book a Flight</a>
+      <a href="#">Manage Booking</a>
+      <a href="#">Check-in</a>
+      <a href="#">Flight Status</a>
+      <a href="#">Deals</a>
+      <a href="#" class="nav-cta">My Account</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Fly Beyond Expectations</h2>
+    <p>Experience comfort, luxury, and convenience on every journey with CWC Airlines — your gateway to over 200 destinations worldwide.</p>
+  </section>
+
+  <div class="booking-box">
+    <div class="trip-tabs">
+      <span class="trip-tab active">Round Trip</span>
+      <span class="trip-tab">One Way</span>
+      <span class="trip-tab">Multi-City</span>
+    </div>
+    <form>
+      <div class="form-grid">
+        <div class="field">
+          <label>From</label>
+          <input type="text" placeholder="City or airport">
+        </div>
+        <div class="field">
+          <label>To</label>
+          <input type="text" placeholder="City or airport">
+        </div>
+        <div class="field">
+          <label>Departure</label>
+          <input type="date">
+        </div>
+        <div class="field">
+          <label>Return</label>
+          <input type="date">
+        </div>
+        <div class="field">
+          <label>Travelers</label>
+          <select>
+            <option>1 Adult</option>
+            <option>2 Adults</option>
+            <option>3 Adults</option>
+            <option>4 Adults</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Class</label>
+          <select>
+            <option>Economy</option>
+            <option>Premium Economy</option>
+            <option>Business</option>
+            <option>First Class</option>
+          </select>
+        </div>
+        <button type="button" class="btn">Search Flights</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="section-head">
+    <span class="eyebrow">Trending Now</span>
+    <h2>Popular Destinations</h2>
+    <p>Discover our most-loved routes, hand-picked deals, and exclusive seasonal offers from CWC Airlines.</p>
+  </div>
+
+  <section class="sections">
+    <div class="card">
+      <div class="card-img">
+        <span class="badge">Special Fare</span>
+        <img src="https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=800&q=80" alt="Singapore">
+      </div>
+      <div class="card-content">
+        <h3>Singapore</h3>
+        <p>Garden city with iconic skylines and world-class dining experiences.</p>
+        <div class="card-meta">
+          <div class="price">$549 <small>/ round trip</small></div>
+          <a href="#" class="card-link">Book &rarr;</a>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img">
+        <span class="badge">Upgrade Deal</span>
+        <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&q=80" alt="Paris">
+      </div>
+      <div class="card-content">
+        <h3>Paris, France</h3>
+        <p>Romance, art, and Michelin-star cuisine in the heart of Europe.</p>
+        <div class="card-meta">
+          <div class="price">$789 <small>/ round trip</small></div>
+          <a href="#" class="card-link">Book &rarr;</a>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img">
+        <span class="badge">Family</span>
+        <img src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=800&q=80" alt="Tokyo">
+      </div>
+      <div class="card-content">
+        <h3>Tokyo, Japan</h3>
+        <p>Where tradition meets the future — temples, neon, and culinary gems.</p>
+        <div class="card-meta">
+          <div class="price">$899 <small>/ round trip</small></div>
+          <a href="#" class="card-link">Book &rarr;</a>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img">
+        <span class="badge">Hot</span>
+        <img src="https://images.unsplash.com/photo-1538970272646-f61fabb3a8a2?w=800&q=80" alt="Dubai">
+      </div>
+      <div class="card-content">
+        <h3>Dubai, UAE</h3>
+        <p>Luxury shopping, ultramodern architecture, and desert adventures.</p>
+        <div class="card-meta">
+          <div class="price">$679 <small>/ round trip</small></div>
+          <a href="#" class="card-link">Book &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="features-grid">
+      <div class="feature">
+        <div class="icon">&#9992;</div>
+        <h4>200+ Destinations</h4>
+        <p>Connecting cities across six continents with seamless service.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">&#9733;</div>
+        <h4>Award-Winning Service</h4>
+        <p>Voted "Best Airline" four years in a row by global travelers.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">&#128274;</div>
+        <h4>Flexible Booking</h4>
+        <p>Free changes and cancellations on most fares within 24 hours.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">&#128241;</div>
+        <h4>24/7 Support</h4>
+        <p>Real humans ready to help, day or night, wherever you are.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-banner">
+    <h2>Join CWC Rewards</h2>
+    <p>Earn miles on every flight, enjoy priority boarding, and unlock exclusive member benefits.</p>
+    <a href="#" class="btn">Sign Up Free</a>
+  </section>
+
+  <p><a id="editThisPageLink" target="_blank" style="color:blue;display:none">Edit this page</a></p>
+
+  <script>
+    document.getElementById('editThisPageLink').href =
+      "https://github.com/ESW1234/esw1234.github.io/edit/master" + window.location.pathname;
+  </script>
+
+  <!-- <script type='text/javascript' src='https://service.force.com/asyncclient/bootstrap.js'></script> -->
+  <script type='text/javascript'>
+    function initEmbeddedMessaging() {
+      try {
+        agentforce_messaging.settings.language = 'en_US';
+        agentforce_messaging.settings.devMode = true;
+        agentforce_messaging.init(
+          '00DLT000008rciV',
+          'CWCChannelwASA3',
+          'https://orgfarm-e47cee3d5f.demo.test1.my.pc-rnd.site.com/ESWCWCChannelwASA31758191132586',
+          {
+            scrt2URL: 'https://orgfarm-e47cee3d5f.demo.test1.my.pc-rnd.salesforce-scrt.com'
+          }
+        );
+      } catch (err) {
+        console.error('Error loading Embedded Messaging: ', err);
+      }
+    };
+  </script>
+  <script type='text/javascript' src='https://orgfarm-e47cee3d5f.demo.test1.my.pc-rnd.site.com/ESWCWCChannelwASA31758191132586/assets/js/init.js' onload='initEmbeddedMessaging()'></script>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="logo" style="color:#fff;margin-bottom:12px;">
+          <span class="logo-mark">&#9992;</span>
+          CWC Airlines
+        </div>
+        <p style="font-size:14px;margin:0;max-width:320px;">
+          Flying you beyond expectations since 1985. Comfort, luxury, and reliability — on every journey.
+        </p>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="#">About Us</a>
+        <a href="#">Careers</a>
+        <a href="#">Press</a>
+        <a href="#">Investor Relations</a>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <a href="#">Help Center</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Baggage Info</a>
+        <a href="#">Travel Advisories</a>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <a href="#">Terms of Service</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Cookie Settings</a>
+        <a href="#">Accessibility</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2025 CWC Airlines. All rights reserved. (Dummy Site for Testing)
+    </div>
+  </footer>
+
+</body>
+</html>
